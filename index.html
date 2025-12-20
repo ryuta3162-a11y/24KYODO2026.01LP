@@ -280,12 +280,12 @@
         /* 豪華なゴールドプレートバッジ（横長） */
         .gold-plate-badge {
             position: absolute;
-            top: -25px; /* さらに上に移動 */
-            right: -15px; /* 少し外側へ */
+            top: -20px; 
+            right: -20px; /* 右側にはみ出させる */
             width: auto;
-            min-width: 160px;
+            min-width: 140px; /* 少し小さく */
             z-index: 30;
-            transform: rotate(15deg); /* 傾きをきつく */
+            transform: rotate(25deg); /* 傾きをきつく (15deg -> 25deg) */
             /* ゴールドグラデーション: 金属光沢 */
             background: linear-gradient(
                 135deg, 
@@ -296,27 +296,27 @@
                 var(--newyear-gold-dark) 100%
             );
             border: 2px solid #fff;
-            border-radius: 8px;
+            border-radius: 6px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.4), inset 0 0 5px rgba(255,255,255,0.8);
-            padding: 8px 16px;
+            padding: 6px 12px; /* 少し小さく */
             text-align: center;
-            color: #3e2723; /* 濃い茶色で視認性確保 */
-            overflow: hidden; /* シャインエフェクトのはみ出し防止 */
+            color: #3e2723;
+            overflow: hidden;
         }
 
         /* バッジ内のテキスト */
         .gold-plate-badge .badge-amount {
             font-family: var(--font-accent);
-            font-size: 1.6rem;
+            font-size: 1.4rem; /* 少し小さく */
             font-weight: 900;
             line-height: 1;
             display: block;
             text-shadow: 0 1px 0 rgba(255,255,255,0.6);
             letter-spacing: -0.05em;
-            color: #c21632; /* 金額は赤で強調 */
+            color: #c21632;
         }
         .gold-plate-badge .badge-sub {
-            font-size: 0.9rem;
+            font-size: 0.8rem; /* 少し小さく */
             font-weight: 900;
             display: block;
             margin-top: 2px;
@@ -347,20 +347,20 @@
             100% { left: 200%; } /* 残りの時間は待機 */
         }
 
-        /* モバイル調整 */
+        /* モバイル調整 - 被らないように位置とサイズを厳しく調整 */
         @media (max-width: 480px) {
             .gold-plate-badge {
-                top: -45px; /* スマホで文字被りを避けるためさらに上へ */
-                right: -5px; /* 右端に寄せる */
-                transform: rotate(15deg); /* スマホでもしっかり斜めに */
-                padding: 6px 12px;
-                min-width: 140px;
+                top: -50px; /* さらに上へ逃がす */
+                right: -10px; /* 右端ギリギリ */
+                transform: rotate(25deg); 
+                padding: 4px 10px;
+                min-width: 120px;
             }
             .gold-plate-badge .badge-amount {
-                font-size: 1.4rem;
+                font-size: 1.2rem;
             }
             .gold-plate-badge .badge-sub {
-                font-size: 0.8rem;
+                font-size: 0.7rem;
             }
         }
 
@@ -709,7 +709,7 @@
         <div class="banner-left-content">
             <div class="banner-text-row-top">
                 <span class="banner-date" id="dynamic-end-date">1月4日(日)まで</span>
-                <span class="banner-slots-badge" id="remaining-slots">先着40名様</span>
+                <span class="banner-slots-badge" id="remaining-slots">先着30名様</span>
             </div>
             <div class="banner-text-row-bottom">
                 <span class="mascot-star">◆</span>
@@ -840,7 +840,7 @@
                         <li><i class="ph ph-calendar-check"></i><span><strong>2026年7月末までの在籍</strong>が条件です</span></li>
                         <li><i class="ph ph-warning-circle"></i><span>期間内に退会された場合、違約金として<strong>37,900円</strong>が発生します</span></li>
                         <li><i class="ph ph-device-mobile-camera"></i><span>JOYFITAPPからの入会が必須です</span></li>
-                        <li><i class="ph ph-gear"></i><span>各オプションは入会時、<strong>全て自動契約</strong>となります</span></li>
+                        <li><i class="ph ph-gear"></i><span><strong>無料オプション</strong>は入会時、<strong>全て自動契約</strong>となります</span></li>
                     </ul>
                     <p class="plan-option-note">※無料オプションの解約をご希望の場合は<br><strong style="color: var(--newyear-gold-light); font-size: 1rem;">1月末日</strong>までに手続きが必要です</p>
                 </div>
@@ -1072,7 +1072,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const fixedStartDate = new Date(CAMPAIGN_START_DATE.getFullYear(), CAMPAIGN_START_DATE.getMonth(), CAMPAIGN_START_DATE.getDate());
         const fixedEndDate = new Date(CAMPAIGN_END_DATE.getFullYear(), CAMPAIGN_END_DATE.getMonth(), CAMPAIGN_END_DATE.getDate());
 
-        const maxSlots = 40; // 先着40名
+        const maxSlots = 30; // 先着30名
         const minSlots = 1;
         
         // 期間の合計日数
