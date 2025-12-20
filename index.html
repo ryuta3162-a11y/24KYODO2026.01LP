@@ -24,6 +24,7 @@
             /* お正月用アクセント */
             --newyear-gold: #D4AF37; 
             --newyear-gold-light: #F8E71C; 
+            --newyear-gold-dark: #B48811; /* 影用の暗い金 */
             
             /* 背景色やテキスト色 */
             --color-dark: #2c3e50;
@@ -259,6 +260,7 @@
             margin: -10px 0 20px 0;
             position: relative;
             top: -1px;
+            z-index: 20; /* バッジ表示のためにZ-index調整 */
         }
         .campaign-header h2 {
             margin: 0;
@@ -275,6 +277,93 @@
             font-weight: 700;
         }
 
+        /* 豪華なゴールドプレートバッジ（横長） */
+        .gold-plate-badge {
+            position: absolute;
+            top: -25px; /* さらに上に移動 */
+            right: -15px; /* 少し外側へ */
+            width: auto;
+            min-width: 160px;
+            z-index: 30;
+            transform: rotate(15deg); /* 傾きをきつく */
+            /* ゴールドグラデーション: 金属光沢 */
+            background: linear-gradient(
+                135deg, 
+                var(--newyear-gold-dark) 0%, 
+                var(--newyear-gold) 20%, 
+                #fffae0 45%, 
+                var(--newyear-gold) 55%, 
+                var(--newyear-gold-dark) 100%
+            );
+            border: 2px solid #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4), inset 0 0 5px rgba(255,255,255,0.8);
+            padding: 8px 16px;
+            text-align: center;
+            color: #3e2723; /* 濃い茶色で視認性確保 */
+            overflow: hidden; /* シャインエフェクトのはみ出し防止 */
+        }
+
+        /* バッジ内のテキスト */
+        .gold-plate-badge .badge-amount {
+            font-family: var(--font-accent);
+            font-size: 1.6rem;
+            font-weight: 900;
+            line-height: 1;
+            display: block;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+            letter-spacing: -0.05em;
+            color: #c21632; /* 金額は赤で強調 */
+        }
+        .gold-plate-badge .badge-sub {
+            font-size: 0.9rem;
+            font-weight: 900;
+            display: block;
+            margin-top: 2px;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+        }
+
+        /* シャインエフェクト（光が走るアニメーション） */
+        .gold-plate-badge::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.8) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: skewX(-25deg);
+            animation: shine-effect 4s infinite;
+        }
+
+        @keyframes shine-effect {
+            0% { left: -100%; }
+            20% { left: 200%; } /* 素早く通過 */
+            100% { left: 200%; } /* 残りの時間は待機 */
+        }
+
+        /* モバイル調整 */
+        @media (max-width: 480px) {
+            .gold-plate-badge {
+                top: -45px; /* スマホで文字被りを避けるためさらに上へ */
+                right: -5px; /* 右端に寄せる */
+                transform: rotate(15deg); /* スマホでもしっかり斜めに */
+                padding: 6px 12px;
+                min-width: 140px;
+            }
+            .gold-plate-badge .badge-amount {
+                font-size: 1.4rem;
+            }
+            .gold-plate-badge .badge-sub {
+                font-size: 0.8rem;
+            }
+        }
+
         .plan-content { display: block; }
         
         .plan-accordion-content { 
@@ -288,22 +377,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
         
-        /* インパクト大の割引額表示 */
-        .impact-discount {
-            background-color: #fffbe6;
-            color: var(--brand);
-            text-align: center;
-            padding: 1rem;
-            border-bottom: 2px dashed var(--newyear-gold);
-        }
-        .impact-discount .label { font-size: 0.9rem; font-weight: 900; display: block; color: #333; margin-bottom: 4px; }
-        .impact-discount .amount { font-size: 2rem; font-weight: 900; font-family: var(--font-accent); line-height: 1; letter-spacing: -0.05em; color: var(--brand); }
-        .impact-discount .unit { font-size: 1rem; font-weight: 900; color: #333; }
-        .impact-discount .balloon { 
-            display: inline-block; background: var(--newyear-gold); color: #000; font-size: 0.8rem; font-weight: 900; 
-            padding: 2px 8px; border-radius: 4px; vertical-align: middle; margin-left: 8px; position: relative; top: -5px;
-        }
-
         .price-list { padding: 0 1.5rem; }
         .price-item { display: flex; justify-content: center; align-items: flex-start; padding: 1rem 0; border-bottom: 1px dashed #ccc; gap: 0.5rem; }
         @media (max-width: 400px) {
@@ -373,7 +446,26 @@
             font-size: 0.8rem; font-weight: 700; color: #555; margin-top: 4px;
         }
 
-        /* 特別価格の強調表示 (月会費) */
+        /* 初期費用合計用のブロックスタイル (新設) */
+        .initial-fee-block {
+            padding: 1.5rem; 
+            text-align: center; 
+            background-color: #fff9f9; 
+            border-bottom: 2px solid var(--newyear-gold); 
+            border-radius: 12px 12px 0 0;
+        }
+        .initial-fee-block .label { 
+            font-size: 1rem; font-weight: 900; color: #333; margin-bottom: 0.5rem; 
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .initial-fee-block .price-large { 
+            font-family: var(--font-base); font-size: 2.2rem; font-weight: 900; color: var(--brand); 
+        }
+        .initial-fee-block .sub-desc {
+            font-size: 0.85rem; font-weight: 700; color: #555; margin-top: 8px;
+        }
+
+        /* 特別価格の強調表示 (月会費) - フォントサイズ修正: 1.8rem */
         .price-item.special-highlight {
             border: 3px solid var(--brand);
             background-color: #fff;
@@ -392,7 +484,7 @@
         }
         .special-highlight .label-group .label { font-size: 1.1rem; color: var(--brand); }
         .special-highlight .price-display-center .price-value { 
-            font-size: 2.8rem; /* 特大サイズ */
+            font-size: 1.8rem;
             color: var(--brand); 
             text-shadow: 2px 2px 0px #fff, 0 0 5px rgba(194,22,50,0.1);
         }
@@ -634,18 +726,19 @@
         <div class="campaign-header">
             <h2>健康応援キャンペーン</h2>
             <span class="sub-text">12月・1月入会限定プラン</span>
+            
+            <!-- 豪華なゴールドプレートバッジ（横長） -->
+            <div class="gold-plate-badge">
+                <span class="badge-amount">68,030<span style="font-size: 0.9rem; color: #333;">円(税込)</span></span>
+                <span class="badge-sub">お得!!</span>
+            </div>
         </div>
 
         <div id="plan1" class="plan-content active">
             <div class="plan-accordion-content">
                 <div class="price-showcase">
                     
-                    <!-- インパクトエリア -->
-                    <div class="impact-discount">
-                        <span class="label">通常プランより...</span>
-                        <span class="amount">最大 68,030<span class="unit">円(税込)</span></span>
-                        <span class="balloon">お得！</span>
-                    </div>
+                    <!-- インパクトエリアはヘッダーバッジに統合 -->
 
                     <div class="price-list">
                         <!-- 1. 12月会費（日割り） -->
@@ -707,7 +800,7 @@
                             <a href="#options-group-section" style="display: inline-block; background-color: var(--brand); color: white; font-weight: 900; font-size: 0.9rem; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">対象オプション詳細はコチラ</a>
                         </div>
 
-                        <!-- 12月会費合計ブロック (リスト途中に移動) -->
+                        <!-- 12月会費合計ブロック (リスト途中に挿入) -->
                         <div class="mid-list-total-block">
                             <div class="label"><i class="ph ph-wallet"></i> 12月会費合計</div>
                             <div><span class="price-large" id="initial-total-price">0<span class="unit-large">円(税込)</span></span></div>
@@ -722,7 +815,7 @@
                                 <div class="label">
                                     月会費
                                     <span class="note" style="display: block; margin-top: 4px; font-size: 0.85rem; color: #d32f2f; line-height: 1.4;">
-                                        2026年<br>1月〜6月分 (6ヶ月間)
+                                        2026年<br>1月〜6月分<br>(6ヶ月間)
                                     </span>
                                 </div>
                             </div>
@@ -754,17 +847,8 @@
 
                 <div class="how-to-join-container">
                     <div class="steps-container">
-                        <div class="join-box-f step1-form">
-                            <div class="step-header-f">ステップ1:<br>6ヶ月継続プラン申請</div>
-                            <div class="step-content-f">
-                                <i class="ph ph-file-text step-icon-f"></i>
-                                <h4 class="step-subtitle-f">新規入会者限定</h4>
-                                <p class="step-desc-f">下記の専用フォームから簡単申請!</p>
-                                <a href="https://24kyodo-special2.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn-form">申請フォームはコチラ</a>
-                            </div>
-                        </div>
                         <div class="join-box-f">
-                            <div class="step-header-f">ステップ2:<br>アプリ入会</div>
+                            <div class="step-header-f">アプリでかんたん入会</div>
                             <div class="step-content-f">
                                 <i class="ph ph-device-mobile step-icon-f"></i>
                                 <h4 class="step-subtitle-f">JOYFITAPPをインストール</h4>
@@ -971,7 +1055,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // JavaScriptの月は0始まりなので、1月は0
     const CAMPAIGN_END_DATE = new Date(2026, 0, 4, 23, 59, 59, 999);
     // キャンペーン開始日 (12/1と仮定)
-    const CAMPAIGN_START_DATE = new Date(2025, 11, 1, 0, 0, 0, 0); 
+    const CAMPAIGN_START_DATE = new Date(2025, 11, 21, 0, 0, 0, 0); 
 
     const dynamicEndDateEl = document.getElementById('dynamic-end-date');
     if (dynamicEndDateEl) {
@@ -989,7 +1073,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const fixedEndDate = new Date(CAMPAIGN_END_DATE.getFullYear(), CAMPAIGN_END_DATE.getMonth(), CAMPAIGN_END_DATE.getDate());
 
         const maxSlots = 40; // 先着40名
-        const minSlots = 3;
+        const minSlots = 1;
         
         // 期間の合計日数
         const totalDurationDays = Math.ceil((fixedEndDate - fixedStartDate) / (1000 * 60 * 60 * 24));
