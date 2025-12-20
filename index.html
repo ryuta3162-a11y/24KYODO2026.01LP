@@ -65,9 +65,69 @@
             padding-bottom: 120px;
             overflow-x: hidden; 
             color: var(--color-text);
-            /* 年末年始背景: 紅白グラデーション */
-            background: linear-gradient(135deg, var(--color-background-start) 0%, var(--color-background-end) 50%, var(--color-background-start) 100%);
             min-height: 100vh;
+            position: relative;
+            /* ベース背景色 */
+            background-color: #fffafadd;
+        }
+
+        /* --- 年末年始用 背景演出 --- */
+        
+        /* 1. 和柄背景（市松模様） */
+        .japanese-pattern-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-color: #fff0f0;
+            /* 市松模様のCSS実装 */
+            background-image:
+                linear-gradient(45deg, #ffe8e8 25%, transparent 25%, transparent 75%, #ffe8e8 75%, #ffe8e8),
+                linear-gradient(45deg, #ffe8e8 25%, transparent 25%, transparent 75%, #ffe8e8 75%, #ffe8e8);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+            opacity: 0.6;
+        }
+
+        /* 2. 金粉（パーティクル）コンテナ */
+        .gold-dust-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* 金粉の粒子 */
+        .gold-particle {
+            position: absolute;
+            background: radial-gradient(circle, var(--newyear-gold-light) 0%, var(--newyear-gold) 100%);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float-down linear infinite;
+            box-shadow: 0 0 5px var(--newyear-gold-light);
+        }
+
+        @keyframes float-down {
+            0% {
+                transform: translateY(-10vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(110vh) translateX(20px) rotate(360deg);
+                opacity: 0;
+            }
         }
         
         /* コンテンツ全体を包むラッパー */
@@ -115,14 +175,17 @@
             margin-top: 20px;
             overflow: visible;
         }
+        /* しめ縄風トップ装飾 */
         #limited-time-banner::before {
             content: '';
             position: absolute;
-            top: -8px; left: 50%; transform: translateX(-50%);
-            width: 80%; height: 4px;
-            background: repeating-linear-gradient(90deg, var(--brand), var(--brand) 10px, #fff 10px, #fff 20px);
-            border-radius: 4px;
+            top: -12px; left: 50%; transform: translateX(-50%);
+            width: 90%; height: 8px;
+            background: repeating-linear-gradient(45deg, #fff, #fff 10px, var(--brand) 10px, var(--brand) 20px);
+            border-radius: 8px;
             z-index: 2;
+            border: 2px solid var(--newyear-gold);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .campaign-title-label {
@@ -276,7 +339,8 @@
 
         /* テキストサイズズレ防止のため統一 */
         .price-display-center .price-value { font-size: 1.5rem; font-weight: 900; font-family: var(--font-base); }
-        .price-display-center .price-value.zero-yen { color: var(--brand); font-size: 2.2rem; }
+        /* 以前のzero-yenクラスのフォントサイズ指定を削除し、.price-valueに統一 */
+        .price-display-center .price-value.zero-yen { color: var(--brand); }
         .price-display-center .unit { font-family: var(--font-base); font-size: 1rem; font-weight: 700; }
         .price-display-center .original { font-size: 1rem; font-family: var(--font-base); color: #777; text-decoration: line-through; display: block; margin-bottom: 4px; }
         .price-display-center .free-option-note { font-size: 0.9rem; font-weight: 700; color: var(--brand); display: block; margin-top: 4px; }
@@ -341,6 +405,16 @@
         }
 
         .options-carousel-section .text-box { margin: 0 auto; max-width: 90%; }
+        /* 余白調整 */
+        .options-carousel-section {
+            padding: 0;
+            background-color: transparent !important;
+            width: 100%;
+            padding-bottom: 20px;
+        }
+        .options-carousel-section:first-child { padding-top: 20px; }
+        .options-carousel-section:nth-child(2) { margin-top: 20px; }
+
         .options-carousel-section .section-title { font-size: 1.6rem; font-weight: 900; color: #fff; text-shadow: 0 0 5px rgba(0,0,0,0.5); margin-bottom: 0.5rem; font-family: var(--font-base); }
         .options-carousel-section .section-title .highlight { font-family: var(--font-base); color: var(--newyear-gold); font-size: 2.5rem; margin: 0 0.25rem; vertical-align: -0.1em; }
         .options-carousel-section .section-subtitle { font-size: 0.9rem; color: #fff; margin-bottom: 2.5rem; line-height: 1.6; font-weight: 700; }
@@ -472,6 +546,10 @@
 
 <body>
 
+<!-- 背景装飾用の要素 -->
+<div class="japanese-pattern-bg"></div>
+<div class="gold-dust-container" id="gold-dust-container"></div>
+
 <!-- コンテンツ全体をラッパーで囲み、中央寄せを保証 -->
 <div class="lp-wrapper">
 
@@ -547,7 +625,7 @@
                             <div class="divider-dot"></div>
                             <div class="price-display-center">
                                 <span class="price-value zero-yen">まとめて0<span class="unit">円</span></span>
-                                <span class="free-option-note">(全オプション対象)</span>
+                                <span class="free-option-note">(無料オプション対象)</span>
                             </div>
                         </div>
                         
@@ -643,6 +721,31 @@
                     <i class="ph ph-arrow-left"></i>
                 </button>
                 <button id="carousel-next-free">
+                    <i class="ph ph-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- 復活: 3つの有料オプション -->
+        <section class="options-carousel-section" style="margin-top: 60px;">
+            <div class="text-box">
+                <h2 class="section-title">
+                    <span class="highlight">3</span>つの有料オプション
+                </h2>
+                <p class="section-subtitle">
+                    ※こちらはご希望の方のみ契約いただけます
+                </p>
+            </div>
+            <div class="scene">
+                <div id="card-carousel-paid" class="card-carousel">
+                    <!-- JSで動的に生成されます -->
+                </div>
+            </div>
+            <div class="carousel-nav">
+                <button id="carousel-prev-paid">
+                    <i class="ph ph-arrow-left"></i>
+                </button>
+                <button id="carousel-next-paid">
                     <i class="ph ph-arrow-right"></i>
                 </button>
             </div>
@@ -931,7 +1034,13 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: '体組成計', price: '月額 550円', icon_img: '39.png', description: '体脂肪、筋肉量を測定し<br>トレーニングを最適化' }
     ];
 
-    function initializeCarousel(options, containerId, navPrevId, navNextId) {
+    const paidOptions = [
+        { name: '契約ロッカー', price: '月額 1,650円', icon_img: '43.png', description: 'ウェアやシューズを置いたままに<br>あなた専用のロッカー' },
+        { name: 'ピラティスリフォーマー', price: '月額 3,300円', icon_img: '46.png', description: 'ピラティスマシンを使い<br>体幹等を鍛える本格レッスン' },
+        { name: 'ヨガマットロッカー', price: '月額 1,100円', icon_img: '47.png', description: 'ご自身のヨガマットを保管<br>荷物を減らしたい方へ' }
+    ];
+
+    function initializeCarousel(options, containerId, navPrevId, navNextId, isPaid = false) {
         const carouselContainer = document.getElementById(containerId);
         const prevBtn = document.getElementById(navPrevId);
         const nextBtn = document.getElementById(navNextId);
@@ -939,7 +1048,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const createCardHTML = (option) => `
             <div class="option-card-3d">
-                <div class="card-badge free">12・1月無料</div>
+                <div class="card-badge ${isPaid ? 'paid' : 'free'}">${isPaid ? '有料オプション' : '12・1月無料'}</div>
                 ${option.gender ? `<div class="gender-badge ${option.gender}">${option.genderText}</div>` : ''}
                 <div class="card-icon-area">
                     <img src="./${option.icon_img}" 
@@ -992,6 +1101,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 1つのカルーセルで全オプションを表示
     initializeCarousel(allOptions, 'card-carousel-free', 'carousel-prev-free', 'carousel-next-free');
+    // 有料オプションのカルーセル初期化
+    initializeCarousel(paidOptions, 'card-carousel-paid', 'carousel-prev-paid', 'carousel-next-paid', true);
 
     // 日割り計算ロジック (12月分)
     function calculatePrice(planPrefix) {
@@ -1030,6 +1141,36 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     calculatePrice('plan1');
+
+    // 金粉（パーティクル）生成ロジック
+    function createGoldDust() {
+        const container = document.getElementById('gold-dust-container');
+        if (!container) return;
+
+        const particleCount = 20; // 粒子の数
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('gold-particle');
+            
+            // ランダムな位置、サイズ、速度
+            const size = Math.random() * 6 + 2; // 2px - 8px
+            const posX = Math.random() * 100; // 0% - 100%
+            const duration = Math.random() * 5 + 5; // 5s - 10s
+            const delay = Math.random() * 5; // 0s - 5s
+
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${posX}%`;
+            particle.style.animationDuration = `${duration}s`;
+            particle.style.animationDelay = `${delay}s`;
+
+            container.appendChild(particle);
+        }
+    }
+    
+    // 金粉生成開始
+    createGoldDust();
 });
 </script>
 
