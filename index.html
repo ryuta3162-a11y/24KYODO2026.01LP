@@ -61,12 +61,18 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            padding-bottom: 120px;
+            padding-bottom: 120px; /* 固定バナーの高さ分確保 */
             overflow-x: hidden; 
             color: var(--color-text);
             min-height: 100vh;
             position: relative;
             background-color: #fffafadd;
+            transition: padding-bottom 0.4s ease; /* バナー開閉時のスムーズな余白調整 */
+        }
+        
+        /* バナー非表示時のbodyスタイル */
+        body.banner-hidden {
+            padding-bottom: 40px; /* バナーがない時の余白 */
         }
 
         /* --- 年末年始用 背景演出 --- */
@@ -116,7 +122,7 @@
         /* コンテンツラッパー */
         .lp-wrapper {
             width: 100%;
-            max-width: 640px;
+            max-width: 640px; /* ここで全体の最大幅を制御 */
             margin: 0 auto;
             padding: 0 15px;
             box-sizing: border-box;
@@ -548,13 +554,21 @@
         .options-carousel-section .section-subtitle { font-size: 0.9rem; color: #fff; margin-bottom: 2.5rem; line-height: 1.6; font-weight: 700; }
         
         .scene { width: 100%; height: 450px; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
-        .card-carousel { width: 280px; height: 340px; position: relative; }
+        .card-carousel { 
+            width: 280px; height: 340px; position: relative; 
+            touch-action: pan-y; /* 縦スクロールは阻害せず、横スワイプのみ検知しやすくする */
+            cursor: grab;
+            user-select: none; /* テキスト選択防止 */
+        }
+        .card-carousel:active { cursor: grabbing; }
+
         .option-card-3d {
             position: absolute; width: 280px; height: 340px; border-radius: var(--border-radius); overflow: hidden;
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), z-index 0s 0.25s;
             box-shadow: var(--shadow-strong); border: 4px solid var(--newyear-gold);
             background-color: #ffffff; 
-            cursor: pointer; display: flex; flex-direction: column; justify-content: flex-start; padding: 1.5rem 1rem; text-align: center;
+            /* cursor: pointer; display: flex; flex-direction: column; justify-content: flex-start; padding: 1.5rem 1rem; text-align: center; 親で制御 */
+            display: flex; flex-direction: column; justify-content: flex-start; padding: 1.5rem 1rem; text-align: center;
             left: 50%; top: 0; transform: translateX(-50%); opacity: 1; z-index: 10;
         }
         .card-icon-area { width: 100%; flex-grow: 1; display: flex; justify-content: center; align-items: center; padding-bottom: 1rem; }
@@ -599,7 +613,7 @@
         .notice-container-v22 {
             background-color: #fff; border: 5px solid var(--brand); border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); margin: 60px auto 0 auto; padding: 30px 25px;
-            text-align: center; position: relative; max-width: 90%; width: 100%; box-sizing: border-box;
+            text-align: center; position: relative; width: 100%; box-sizing: border-box; /* max-width削除で横幅統一 */
         }
         .notice-container-v22 .notice-title-v22 { font-family: var(--font-base); font-size: 2.2rem; font-weight: 700; color: var(--brand); margin-bottom: 25px; display: flex; align-items: center; justify-content: center; }
         .notice-container-v22 .notice-title-v22::before, .notice-container-v22 .notice-title-v22::after { content: ''; flex: 1; height: 3px; background-color: var(--brand); opacity: 0.5; margin: 0 10px; }
@@ -612,7 +626,7 @@
         /* --- 追加特典セクション --- */
         .bonus-section {
             background: var(--color-card-bg); border-radius: var(--border-radius); padding: 2.5rem 1.5rem;
-            margin: 2.5rem auto 0 auto; width: 100%; max-width: 640px; box-shadow: var(--shadow-soft); text-align: center; border: 2px solid #eee;
+            margin: 2.5rem auto 0 auto; width: 100%; box-shadow: var(--shadow-soft); text-align: center; border: 2px solid #eee; /* max-width削除 */
         }
         .bonus-section .section-main-header h2 { font-size: 1.6rem; font-weight: 900; color: var(--color-dark); line-height: 1.4; }
         .bonus-section .section-main-header h2 .highlight { font-size: 2rem; color: var(--brand); }
@@ -645,7 +659,7 @@
         .access-section { 
             background: var(--color-card-bg); margin: 30px auto; border-radius: var(--border-radius); overflow: hidden; 
             box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1); transition: all 0.3s ease-out; border: 4px solid var(--brand); 
-            width: 100%; max-width: 640px; box-sizing: border-box;
+            width: 100%; box-sizing: border-box; /* max-width削除 */
         }
         .access-section:hover { transform: translateY(-5px); box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.2); }
         .access-header { padding: 0; background: #fff; }
@@ -692,18 +706,81 @@
             transform: skewX(-25deg); animation: shine-effect 4s infinite;
         }
         
-        #banner-toggle-container { position: fixed; bottom: 100px; right: 20px; z-index: 10000; transition: bottom 0.4s ease; }
-        #banner-toggle-btn { width: 50px; height: 50px; background-color: var(--brand); color: white; border-radius: 50%; border: 2px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.3); cursor: pointer; display: flex; justify-content: center; align-items: center; transition: transform 0.3s ease; }
-        #banner-toggle-btn:hover { transform: scale(1.1); }
-        #banner-toggle-btn svg { width: 24px; height: 24px; }
-        .tooltip { position: absolute; bottom: 110%; right: 0; background-color: #333; color: white; padding: 8px 14px; border-radius: 8px; font-size: 14px; font-weight: 700; white-space: nowrap; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease; pointer-events: none; }
-        .tooltip::after { content: ''; position: absolute; top: 100%; right: 17px; border-width: 6px; border-style: solid; border-color: #333 transparent transparent transparent; }
-        .tooltip.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        #banner-toggle-btn.shake { animation: shake-animation 0.5s 2 ease-in-out; }
-        @keyframes shake-animation { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
-        body.banners-hidden { padding-top: 0 !important; padding-bottom: 20px !important; }
-        body.banners-hidden .fixed-banner { transform: translateY(100%); }
-        body.banners-hidden #banner-toggle-container { bottom: 20px; }
+        /* バナー隠し用のクラス */
+        body.banner-hidden .fixed-banner {
+            transform: translateY(100%);
+        }
+
+        /* --- 新規追加: トグルボタン --- */
+        #banner-toggle-container {
+            position: fixed;
+            bottom: 90px; /* バナーの上 */
+            right: 20px;
+            z-index: 10000;
+            transition: bottom 0.4s ease;
+        }
+        /* バナーが隠れている時はボタンを右下に配置 */
+        body.banner-hidden #banner-toggle-container {
+            bottom: 20px;
+        }
+
+        #banner-toggle-btn {
+            width: 50px; height: 50px;
+            background-color: var(--brand);
+            color: white;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        #banner-toggle-btn:hover {
+            transform: scale(1.1);
+        }
+        /* バナーが隠れている時のボタンデザイン変更（任意） */
+        body.banner-hidden #banner-toggle-btn {
+            background-color: var(--newyear-gold);
+            color: #333;
+        }
+
+        #banner-toggle-btn i {
+            font-size: 24px;
+        }
+
+        .toggle-tooltip {
+            position: absolute;
+            bottom: 110%;
+            right: 0;
+            background-color: #333;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+        .toggle-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 18px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+        #banner-toggle-container:hover .toggle-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
 
     </style>
 </head>
@@ -1060,9 +1137,18 @@
 
 </div> <!-- lp-wrapper end -->
 
+<!-- 固定バナー -->
 <div class="fixed-banner">
     <a href="https://24-kyodo-freetrial.vercel.app/" class="banner-btn trial" target="_blank">見学体験はコチラ👆</a>
     <a href="https://joyfit.jp/kyodo/app_join/" class="banner-btn app" target="_blank">入会はコチラ👆</a>
+</div>
+
+<!-- 新規追加: バナー開閉トグルボタン -->
+<div id="banner-toggle-container">
+    <button id="banner-toggle-btn">
+        <i class="ph ph-x" id="toggle-icon"></i>
+    </button>
+    <div class="toggle-tooltip" id="toggle-tooltip">閉じる</div>
 </div>
 
 <script>
@@ -1178,6 +1264,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const cards = carouselContainer.querySelectorAll('.option-card-3d');
         const totalCards = cards.length;
         let currentIndex = 0;
+        let autoPlayInterval;
+        const AUTO_PLAY_DELAY = 4000; // 自動再生の間隔（ミリ秒）
+
         function updateCarousel() {
             const activeIndex = (currentIndex % totalCards + totalCards) % totalCards;
             cards.forEach((card, index) => {
@@ -1192,9 +1281,77 @@ document.addEventListener('DOMContentLoaded', function() {
                 card.style.transform = transform; card.style.opacity = opacity; card.style.zIndex = zIndex;
             });
         }
-        if(prevBtn) prevBtn.addEventListener('click', () => { currentIndex--; updateCarousel(); });
-        if(nextBtn) nextBtn.addEventListener('click', () => { currentIndex++; updateCarousel(); });
+
+        // --- 自動再生機能 ---
+        function startAutoPlay() {
+            stopAutoPlay(); // 多重起動防止
+            autoPlayInterval = setInterval(() => {
+                currentIndex++;
+                updateCarousel();
+            }, AUTO_PLAY_DELAY);
+        }
+
+        function stopAutoPlay() {
+            if (autoPlayInterval) clearInterval(autoPlayInterval);
+        }
+
+        // --- イベントリスナー ---
+        // クリックイベント
+        if(prevBtn) prevBtn.addEventListener('click', () => { 
+            currentIndex--; updateCarousel(); 
+            stopAutoPlay(); startAutoPlay(); // 操作したらタイマーリセット
+        });
+        if(nextBtn) nextBtn.addEventListener('click', () => { 
+            currentIndex++; updateCarousel(); 
+            stopAutoPlay(); startAutoPlay(); // 操作したらタイマーリセット
+        });
+
+        // --- スワイプ対応 (Touch & Mouse) ---
+        let startX = 0;
+        let isDragging = false;
+
+        const handleDragStart = (x) => {
+            startX = x;
+            isDragging = true;
+            stopAutoPlay(); // ドラッグ中は止める
+            carouselContainer.style.cursor = 'grabbing';
+        };
+
+        const handleDragEnd = (x) => {
+            if (!isDragging) return;
+            isDragging = false;
+            carouselContainer.style.cursor = 'grab';
+            
+            const diff = startX - x;
+            const threshold = 50; // 感度（このピクセル以上動かしたら反応）
+
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0) {
+                    // 左へスワイプ (指を左に動かす = 次へ)
+                    currentIndex++;
+                } else {
+                    // 右へスワイプ (指を右に動かす = 前へ)
+                    currentIndex--;
+                }
+                updateCarousel();
+            }
+            startAutoPlay(); // 操作終わったら再開
+        };
+
+        // Touch events (スマホ)
+        carouselContainer.addEventListener('touchstart', (e) => handleDragStart(e.touches[0].clientX), {passive: true});
+        carouselContainer.addEventListener('touchend', (e) => handleDragEnd(e.changedTouches[0].clientX));
+
+        // Mouse events (PC)
+        carouselContainer.addEventListener('mousedown', (e) => handleDragStart(e.clientX));
+        carouselContainer.addEventListener('mouseup', (e) => handleDragEnd(e.clientX));
+        carouselContainer.addEventListener('mouseleave', () => {
+             // マウスが外れたらドラッグキャンセルして再生再開
+             if(isDragging) { isDragging = false; carouselContainer.style.cursor = 'grab'; startAutoPlay(); }
+        });
+
         updateCarousel();
+        startAutoPlay(); // 初期起動
     }
     initializeCarousel(allOptions, 'card-carousel-free', 'carousel-prev-free', 'carousel-next-free');
     initializeCarousel(paidOptions, 'card-carousel-paid', 'carousel-prev-paid', 'carousel-next-paid', true);
@@ -1230,6 +1387,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     createGoldDust();
+
+    // --- 新規追加: バナー開閉トグルロジック ---
+    const toggleBtn = document.getElementById('banner-toggle-btn');
+    const toggleIcon = document.getElementById('toggle-icon');
+    const toggleTooltip = document.getElementById('toggle-tooltip');
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', function() {
+            document.body.classList.toggle('banner-hidden');
+            
+            // アイコンとツールチップの切り替え
+            if (document.body.classList.contains('banner-hidden')) {
+                // バナーが隠れた -> アイコンを上矢印や「入会」っぽいものに変更
+                toggleIcon.classList.replace('ph-x', 'ph-caret-up');
+                toggleTooltip.textContent = "バナーを表示";
+            } else {
+                // バナーが出ている -> 閉じるアイコンに変更
+                toggleIcon.classList.replace('ph-caret-up', 'ph-x');
+                toggleTooltip.textContent = "閉じる";
+            }
+        });
+    }
 });
 </script>
 
