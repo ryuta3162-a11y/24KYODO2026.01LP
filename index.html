@@ -351,6 +351,65 @@
 
         .price-item-footnote { font-size: 0.75rem; font-weight: 700; color: #777; line-height: 1.5; padding: 0.5rem 0 1rem 0; text-align: center; }
         
+        /* 12月会費合計ブロック (リスト途中に挿入) */
+        .mid-list-total-block {
+            padding: 1.25rem; 
+            text-align: center; 
+            background-color: #fff5f5; /* 薄い赤 */
+            border: 2px solid var(--newyear-gold); 
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .mid-list-total-block .label { 
+            font-size: 1rem; font-weight: 900; color: #333; margin-bottom: 0.25rem; 
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .mid-list-total-block .price-large { 
+            font-family: var(--font-base); font-size: 2rem; font-weight: 900; color: var(--brand); line-height: 1.2;
+        }
+        .mid-list-total-block .unit-large { font-size: 1rem; }
+        .mid-list-total-block .sub-desc {
+            font-size: 0.8rem; font-weight: 700; color: #555; margin-top: 4px;
+        }
+
+        /* 特別価格の強調表示 (月会費) */
+        .price-item.special-highlight {
+            border: 3px solid var(--brand);
+            background-color: #fff;
+            border-radius: 12px;
+            margin-top: 1rem;
+            padding: 1.5rem 0.5rem;
+            box-shadow: 0 8px 20px rgba(194, 22, 50, 0.15);
+            position: relative;
+            overflow: hidden;
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(194, 22, 50, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(194, 22, 50, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(194, 22, 50, 0); }
+        }
+        .special-highlight .label-group .label { font-size: 1.1rem; color: var(--brand); }
+        .special-highlight .price-display-center .price-value { 
+            font-size: 2.8rem; /* 特大サイズ */
+            color: var(--brand); 
+            text-shadow: 2px 2px 0px #fff, 0 0 5px rgba(194,22,50,0.1);
+        }
+        .special-highlight .ribbon-label {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--newyear-gold);
+            color: #000;
+            font-size: 0.8rem;
+            font-weight: 900;
+            padding: 2px 15px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
         .monthly-fee { padding: 1.5rem; text-align: center; background-color: #f8f9fa; border-top: 1px solid #eee; border-radius: 0 0 12px 12px; }
         .monthly-fee .label { font-size: 0.9rem; font-weight: 700; color: #555; margin-bottom: 0.5rem; }
         .monthly-fee .price-large { font-family: var(--font-base); font-size: 1.6rem; font-weight: 900; color: var(--color-dark); }
@@ -589,54 +648,10 @@
                     </div>
 
                     <div class="price-list">
-                        <!-- 1. 入会金 -->
-                        <div class="price-item is-free">
-                            <div class="label-group">
-                                <span class="number-circle">1</span>
-                                <div class="label">入会金</div>
-                            </div>
-                            <div class="divider-dot"></div>
-                            <div class="price-display-center">
-                                <span class="original">2,200円</span>
-                                <span class="price-value zero-yen">0<span class="unit">円</span></span>
-                            </div>
-                        </div>
-
-                        <!-- 2. 月会費 (1月〜6月) -->
-                        <div class="price-item is-discount">
-                            <div class="label-group">
-                                <span class="number-circle">2</span>
-                                <div class="label">月会費<span class="note">1月〜6月分 (6ヶ月間)</span></div>
-                            </div>
-                            <div class="divider-dot"></div>
-                            <div class="price-display-center">
-                                <span class="original">通常 9,350円</span>
-                                <span class="price-value">3,400<span class="unit">円(税込)</span></span>
-                                <span class="calculation-note-final">各月のお支払い額</span>
-                            </div>
-                        </div>
-
-                        <!-- 3. オプション -->
-                        <div class="price-item is-free">
-                            <div class="label-group">
-                                <span class="number-circle">3</span>
-                                <div class="label">オプション<span class="note" style="color: var(--brand);">12月・1月分</span></div>
-                            </div>
-                            <div class="divider-dot"></div>
-                            <div class="price-display-center">
-                                <span class="price-value zero-yen">まとめて0<span class="unit">円</span></span>
-                                <span class="free-option-note">(無料オプション対象)</span>
-                            </div>
-                        </div>
-                        
-                        <div class="price-item-footnote" style="padding-top: 0.5rem; padding-bottom: 1rem; border-bottom: 1px dashed #ccc;">
-                            <a href="#options-group-section" style="display: inline-block; background-color: var(--brand); color: white; font-weight: 900; font-size: 0.9rem; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">対象オプション詳細はコチラ</a>
-                        </div>
-
-                        <!-- 4. 12月会費（日割り） -->
+                        <!-- 1. 12月会費（日割り） -->
                         <div class="price-item">
                             <div class="label-group">
-                                <span class="number-circle" style="background-color: #555;">4</span>
+                                <span class="number-circle" style="background-color: #555;">1</span>
                                 <div class="label">12月会費<span class="note" style="color:#555; font-weight:400;">(初月)</span></div>
                             </div>
                             <div class="divider-dot"></div>
@@ -650,15 +665,71 @@
                             </div>
                         </div>
 
-                        <!-- 5. 事務手数料 -->
+                        <!-- 2. 入会金 -->
+                        <div class="price-item is-free">
+                            <div class="label-group">
+                                <span class="number-circle">2</span>
+                                <div class="label">入会金</div>
+                            </div>
+                            <div class="divider-dot"></div>
+                            <div class="price-display-center">
+                                <span class="original">2,200円</span>
+                                <span class="price-value zero-yen">0<span class="unit">円</span></span>
+                            </div>
+                        </div>
+
+                        <!-- 3. 事務手数料 -->
                         <div class="price-item">
                             <div class="label-group">
-                                <span class="number-circle" style="background-color: #555;">5</span>
+                                <span class="number-circle" style="background-color: #555;">3</span>
                                 <div class="label">事務手数料</div>
                             </div>
                             <div class="divider-dot"></div>
                             <div class="price-display-center">
                                 <span class="price-value">3,300<span class="unit">円</span></span>
+                            </div>
+                        </div>
+
+                        <!-- 4. オプション -->
+                        <div class="price-item is-free">
+                            <div class="label-group">
+                                <span class="number-circle">4</span>
+                                <div class="label">オプション<span class="note" style="color: var(--brand);">12月・1月分</span></div>
+                            </div>
+                            <div class="divider-dot"></div>
+                            <div class="price-display-center">
+                                <span class="price-value zero-yen">まとめて0<span class="unit">円</span></span>
+                                <span class="free-option-note">(無料オプション対象)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="price-item-footnote" style="padding-top: 0.5rem; padding-bottom: 1rem; border-bottom: 1px dashed #ccc;">
+                            <a href="#options-group-section" style="display: inline-block; background-color: var(--brand); color: white; font-weight: 900; font-size: 0.9rem; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">対象オプション詳細はコチラ</a>
+                        </div>
+
+                        <!-- 12月会費合計ブロック (リスト途中に移動) -->
+                        <div class="mid-list-total-block">
+                            <div class="label"><i class="ph ph-wallet"></i> 12月会費合計</div>
+                            <div><span class="price-large" id="initial-total-price">0<span class="unit-large">円(税込)</span></span></div>
+                            <div class="sub-desc">(12月日割り会費 + 事務手数料)</div>
+                        </div>
+
+                        <!-- 5. 月会費 (1月〜6月) - 強調表示 -->
+                        <div class="price-item special-highlight">
+                            <span class="ribbon-label">特別価格</span>
+                            <div class="label-group">
+                                <span class="number-circle">5</span>
+                                <div class="label">
+                                    月会費
+                                    <span class="note" style="display: block; margin-top: 4px; font-size: 0.85rem; color: #d32f2f; line-height: 1.4;">
+                                        2026年<br>1月〜6月分 (6ヶ月間)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="divider-dot"></div>
+                            <div class="price-display-center">
+                                <span class="original">通常 9,350円</span>
+                                <span class="price-value">3,400<span class="unit">円(税込)</span></span>
                             </div>
                         </div>
                     </div>
@@ -1119,7 +1190,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const DAYS_IN_DECEMBER = 31;
         const DAILY_RATE = MONTHLY_FEE / DAYS_IN_DECEMBER;
         const priceEl = document.getElementById(`daily-rate-price-${planPrefix}`);
-        
+        const totalInitialPriceEl = document.getElementById('initial-total-price'); // 合計金額用要素
+        const INITIAL_FEE = 3300; // 事務手数料
+
         if (!priceEl) return;
         
         try {
@@ -1128,7 +1201,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const currentMonthFee = Math.round(DAILY_RATE * remainingDays);
             
             // 初月(12月)が日割り
+            let finalPrice = 0;
             if (currentDay === 1) {
+                finalPrice = MONTHLY_FEE;
                 priceEl.innerHTML = `
                     <span class="price-value">${MONTHLY_FEE.toLocaleString()}<span class="unit">円</span></span>
                     <span class="calculation-note-final">
@@ -1137,6 +1212,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </span>
                 `;
             } else {
+                finalPrice = currentMonthFee;
                 priceEl.innerHTML = `
                     <span class="price-value">${currentMonthFee.toLocaleString()}<span class="unit">円</span></span>
                     <span class="calculation-note-final">
@@ -1144,6 +1220,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         ※誤差の可能性有り
                     </span>
                 `;
+            }
+
+            // 合計金額（初期費用）の計算と表示更新
+            if(totalInitialPriceEl) {
+                const totalInitial = finalPrice + INITIAL_FEE;
+                totalInitialPriceEl.innerHTML = `${totalInitial.toLocaleString()}<span class="unit-large">円(税込)</span>`;
             }
 
         } catch (e) { console.error("日割り計算エラー:", e); }
