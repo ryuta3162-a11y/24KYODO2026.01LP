@@ -310,6 +310,77 @@
              .countdown-number { font-size: 1.4rem; }
         }
 
+        /* --- 特別価格セクション共通スタイル (アニメーション含む) --- */
+        .special-highlight {
+            border: none;
+            background: linear-gradient(135deg, #ffffff 0%, #fff5f5 50%, #fff0f0 100%);
+            border: 4px double var(--newyear-gold);
+            box-shadow: 0 15px 35px rgba(194, 22, 50, 0.2), 0 0 15px rgba(212, 175, 55, 0.3) inset;
+            border-radius: 16px;
+            padding: 2.5rem 1rem 2rem 1rem;
+            position: relative;
+            overflow: hidden;
+            animation: pulse-luxury 2.5s infinite ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* カウントダウンの下に配置するためのエリア設定 */
+        .hero-special-area {
+            margin-top: 25px;
+            width: 100%;
+            z-index: 1;
+        }
+
+        @keyframes pulse-luxury {
+            0% { transform: scale(1); box-shadow: 0 15px 35px rgba(194, 22, 50, 0.2), 0 0 0 0 rgba(212, 175, 55, 0.4); }
+            50% { transform: scale(1.01); box-shadow: 0 20px 40px rgba(194, 22, 50, 0.3), 0 0 0 8px rgba(212, 175, 55, 0); }
+            100% { transform: scale(1); box-shadow: 0 15px 35px rgba(194, 22, 50, 0.2), 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        .special-highlight .ribbon-label {
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            background: linear-gradient(to right, #B48811, #F8E71C 30%, #D4AF37 50%, #F8E71C 70%, #B48811);
+            background-size: 200% auto;
+            color: #3e2723; font-size: 0.9rem; font-weight: 900; padding: 6px 25px;
+            border-radius: 0 0 12px 12px;
+            animation: shine-metallic-ribbon 3s linear infinite;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #fff;
+            z-index: 5; white-space: nowrap;
+        }
+
+        @keyframes shine-metallic-ribbon {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        
+        .special-line-1 { font-size: 1.8rem; font-weight: 900; color: var(--brand); text-shadow: 0 2px 0 #fff, 0 0 5px rgba(194,22,50,0.1); line-height: 1.2; margin-top: 0.5rem; margin-bottom: 0.2rem; width: 100%; }
+        .special-line-2 { font-size: 1rem; font-weight: 700; color: #fff; background: #d32f2f; padding: 3px 12px; border-radius: 20px; margin-bottom: 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: inline-block; }
+        .special-line-3 { font-size: 1.1rem; color: #777; font-weight: 700; position: relative; display: inline-block; margin-bottom: 0.2rem; }
+        .special-line-3::after { content: ''; position: absolute; left: -5%; top: 50%; width: 110%; height: 2px; background: #d32f2f; transform: rotate(-3deg); }
+        
+        .special-line-4 {
+            font-size: 3.5rem; line-height: 1; font-weight: 900; font-family: var(--font-accent);
+            background: linear-gradient(to bottom, #ff3d3d 0%, #c21632 60%, #800000 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: var(--brand);
+            filter: drop-shadow(0 2px 0 #fff) drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+            margin-bottom: 0.5rem; width: 100%;
+        }
+        .special-line-4 .unit { font-size: 1.4rem; color: #333; -webkit-text-fill-color: #333; font-weight: 700; font-family: var(--font-base); margin-left: 2px; }
+
+        @media (max-width: 480px) {
+            .special-line-1 { font-size: 1.5rem; }
+            .special-line-2 { font-size: 0.9rem; }
+            .special-line-4 { font-size: 2.8rem; }
+        }
+
         /* --- プラン選択セクション --- */
         .plan-selection-section {
             background-color: var(--color-white);
@@ -412,82 +483,6 @@
         .mid-list-total-block .unit-large { font-size: 1rem; }
         .mid-list-total-block .sub-desc { font-size: 0.8rem; font-weight: 700; color: #555; margin-top: 4px; }
 
-        .initial-fee-block {
-            padding: 1.5rem; text-align: center; background-color: #fff9f9; 
-            border-bottom: 2px solid var(--newyear-gold); border-radius: 12px 12px 0 0;
-        }
-        .initial-fee-block .label { font-size: 1rem; font-weight: 900; color: #333; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .initial-fee-block .price-large { font-family: var(--font-base); font-size: 2.2rem; font-weight: 900; color: var(--brand); }
-        .initial-fee-block .sub-desc { font-size: 0.85rem; font-weight: 700; color: #555; margin-top: 8px; }
-
-        /* === 特別価格セクション === */
-        .price-item.special-highlight {
-            border: none;
-            background: linear-gradient(135deg, #ffffff 0%, #fff5f5 50%, #fff0f0 100%);
-            border: 4px double var(--newyear-gold);
-            box-shadow: 0 15px 35px rgba(194, 22, 50, 0.2), 0 0 15px rgba(212, 175, 55, 0.3) inset;
-            border-radius: 16px;
-            margin-top: 1.5rem;
-            padding: 2.5rem 1rem 2rem 1rem;
-            position: relative;
-            overflow: hidden;
-            background-image: 
-                radial-gradient(circle at 15% 25%, rgba(212, 175, 55, 0.4) 1px, transparent 2px),
-                radial-gradient(circle at 75% 15%, rgba(212, 175, 55, 0.4) 1.5px, transparent 2.5px),
-                radial-gradient(circle at 85% 85%, rgba(212, 175, 55, 0.4) 1px, transparent 2px),
-                linear-gradient(135deg, #fff 40%, #fff0f0 100%);
-            background-size: 100% 100%;
-            animation: pulse-luxury 2.5s infinite ease-in-out;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0;
-        }
-
-        @keyframes pulse-luxury {
-            0% { transform: scale(1); box-shadow: 0 15px 35px rgba(194, 22, 50, 0.2), 0 0 0 0 rgba(212, 175, 55, 0.4); }
-            50% { transform: scale(1.01); box-shadow: 0 20px 40px rgba(194, 22, 50, 0.3), 0 0 0 8px rgba(212, 175, 55, 0); }
-            100% { transform: scale(1); box-shadow: 0 15px 35px rgba(194, 22, 50, 0.2), 0 0 0 0 rgba(212, 175, 55, 0); }
-        }
-
-        .special-highlight .ribbon-label {
-            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            background: linear-gradient(to right, #B48811, #F8E71C 30%, #D4AF37 50%, #F8E71C 70%, #B48811);
-            background-size: 200% auto;
-            color: #3e2723; font-size: 0.9rem; font-weight: 900; padding: 6px 25px;
-            border-radius: 0 0 12px 12px;
-            animation: shine-metallic-ribbon 3s linear infinite;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #fff;
-            z-index: 5; white-space: nowrap;
-        }
-
-        @keyframes shine-metallic-ribbon {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
-        }
-        
-        .special-line-1 { font-size: 1.8rem; font-weight: 900; color: var(--brand); text-shadow: 0 2px 0 #fff, 0 0 5px rgba(194,22,50,0.1); line-height: 1.2; margin-top: 0.5rem; margin-bottom: 0.2rem; }
-        .special-line-2 { font-size: 1rem; font-weight: 700; color: #fff; background: #d32f2f; padding: 3px 12px; border-radius: 20px; margin-bottom: 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .special-line-3 { font-size: 1.1rem; color: #777; font-weight: 700; position: relative; display: inline-block; margin-bottom: 0.2rem; }
-        .special-line-3::after { content: ''; position: absolute; left: -5%; top: 50%; width: 110%; height: 2px; background: #d32f2f; transform: rotate(-3deg); }
-        
-        .special-line-4 {
-            font-size: 3.5rem; line-height: 1; font-weight: 900; font-family: var(--font-accent);
-            background: linear-gradient(to bottom, #ff3d3d 0%, #c21632 60%, #800000 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: var(--brand);
-            filter: drop-shadow(0 2px 0 #fff) drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
-            margin-bottom: 0.5rem; transform: scale(1); transition: transform 0.3s;
-        }
-        .special-line-4 .unit { font-size: 1.4rem; color: #333; -webkit-text-fill-color: #333; font-weight: 700; font-family: var(--font-base); margin-left: 2px; }
-
-        @media (max-width: 480px) {
-            .special-line-1 { font-size: 1.5rem; }
-            .special-line-2 { font-size: 0.9rem; }
-            .special-line-4 { font-size: 2.8rem; }
-        }
-
         .monthly-fee { padding: 1.5rem; text-align: center; background-color: #f8f9fa; border-top: 1px solid #eee; border-radius: 0 0 12px 12px; }
         .monthly-fee .label { font-size: 0.9rem; font-weight: 700; color: #555; margin-bottom: 0.5rem; }
         .monthly-fee .price-large { font-family: var(--font-base); font-size: 1.6rem; font-weight: 900; color: var(--color-dark); }
@@ -556,9 +551,9 @@
         .scene { width: 100%; height: 450px; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
         .card-carousel { 
             width: 280px; height: 340px; position: relative; 
-            touch-action: pan-y; /* 縦スクロールは阻害せず、横スワイプのみ検知しやすくする */
+            touch-action: pan-y;
             cursor: grab;
-            user-select: none; /* テキスト選択防止 */
+            user-select: none;
         }
         .card-carousel:active { cursor: grabbing; }
 
@@ -567,7 +562,6 @@
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), z-index 0s 0.25s;
             box-shadow: var(--shadow-strong); border: 4px solid var(--newyear-gold);
             background-color: #ffffff; 
-            /* cursor: pointer; display: flex; flex-direction: column; justify-content: flex-start; padding: 1.5rem 1rem; text-align: center; 親で制御 */
             display: flex; flex-direction: column; justify-content: flex-start; padding: 1.5rem 1rem; text-align: center;
             left: 50%; top: 0; transform: translateX(-50%); opacity: 1; z-index: 10;
         }
@@ -583,7 +577,6 @@
             position: absolute; top: 1rem; left: 1rem; padding: 0.375rem 0.75rem; font-weight: 900; font-size: 0.8rem; border-radius: 0.375rem; z-index: 5;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2); overflow: hidden;
         }
-        /* 無料バッジ（クリスタルレッド） */
         .card-badge.free { 
             background: linear-gradient(135deg, #8a0e20 0%, #C21632 25%, #ff5e78 50%, #C21632 75%, #8a0e20 100%);
             color: #fff; border: 1px solid rgba(255,255,255,0.6); text-shadow: 0 1px 2px rgba(0,0,0,0.3);
@@ -593,7 +586,6 @@
             background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
             transform: skewX(-25deg); animation: shine-effect 4s infinite;
         }
-        /* 有料バッジ */
         .card-badge.paid { 
             background: linear-gradient(135deg, #B48811 0%, #D4AF37 50%, #B48811 100%); color: #3e2723; border: 1px solid #fff; text-shadow: 0 1px 0 rgba(255,255,255,0.4);
         }
@@ -613,7 +605,7 @@
         .notice-container-v22 {
             background-color: #fff; border: 5px solid var(--brand); border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); margin: 60px auto 0 auto; padding: 30px 25px;
-            text-align: center; position: relative; width: 100%; box-sizing: border-box; /* max-width削除で横幅統一 */
+            text-align: center; position: relative; width: 100%; box-sizing: border-box; 
         }
         .notice-container-v22 .notice-title-v22 { font-family: var(--font-base); font-size: 2.2rem; font-weight: 700; color: var(--brand); margin-bottom: 25px; display: flex; align-items: center; justify-content: center; }
         .notice-container-v22 .notice-title-v22::before, .notice-container-v22 .notice-title-v22::after { content: ''; flex: 1; height: 3px; background-color: var(--brand); opacity: 0.5; margin: 0 10px; }
@@ -626,7 +618,7 @@
         /* --- 追加特典セクション --- */
         .bonus-section {
             background: var(--color-card-bg); border-radius: var(--border-radius); padding: 2.5rem 1.5rem;
-            margin: 2.5rem auto 0 auto; width: 100%; box-shadow: var(--shadow-soft); text-align: center; border: 2px solid #eee; /* max-width削除 */
+            margin: 2.5rem auto 0 auto; width: 100%; box-shadow: var(--shadow-soft); text-align: center; border: 2px solid #eee; 
         }
         .bonus-section .section-main-header h2 { font-size: 1.6rem; font-weight: 900; color: var(--color-dark); line-height: 1.4; }
         .bonus-section .section-main-header h2 .highlight { font-size: 2rem; color: var(--brand); }
@@ -659,7 +651,7 @@
         .access-section { 
             background: var(--color-card-bg); margin: 30px auto; border-radius: var(--border-radius); overflow: hidden; 
             box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1); transition: all 0.3s ease-out; border: 4px solid var(--brand); 
-            width: 100%; box-sizing: border-box; /* max-width削除 */
+            width: 100%; box-sizing: border-box;
         }
         .access-section:hover { transform: translateY(-5px); box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.2); }
         .access-header { padding: 0; background: #fff; }
@@ -706,20 +698,17 @@
             transform: skewX(-25deg); animation: shine-effect 4s infinite;
         }
         
-        /* バナー隠し用のクラス */
         body.banner-hidden .fixed-banner {
             transform: translateY(100%);
         }
 
-        /* --- 新規追加: トグルボタン --- */
         #banner-toggle-container {
             position: fixed;
-            bottom: 90px; /* バナーの上 */
+            bottom: 90px;
             right: 20px;
             z-index: 10000;
             transition: bottom 0.4s ease;
         }
-        /* バナーが隠れている時はボタンを右下に配置 */
         body.banner-hidden #banner-toggle-container {
             bottom: 20px;
         }
@@ -740,7 +729,6 @@
         #banner-toggle-btn:hover {
             transform: scale(1.1);
         }
-        /* バナーが隠れている時のボタンデザイン変更（任意） */
         body.banner-hidden #banner-toggle-btn {
             background-color: var(--newyear-gold);
             color: #333;
@@ -795,7 +783,7 @@
 <div class="lp-wrapper">
 
     <div id="limited-time-banner">
-        <!-- 新しい豪華リボン構造 -->
+        <!-- 豪華リボン構造 -->
         <div class="luxury-ribbon-wrapper">
             <div class="ribbon-tail left"></div>
             <div class="ribbon-tail right"></div>
@@ -821,16 +809,27 @@
             </div>
         </div>
         <div id="banner-countdown" class="countdown-container"></div>
+
+        <!-- ファーストビュー: スペシャルプライス・ブロック (最重要訴求) -->
+        <div class="hero-special-area">
+            <div class="special-highlight">
+                <span class="ribbon-label">Special Price</span>
+                <div class="special-line-1">キャンペーン特別価格</div>
+                <div class="special-line-2">2026年1月〜6月分(6ヶ月間)</div>
+                <div class="special-line-3">通常 9,350円</div>
+                <div class="special-line-4">3,400<span class="unit">円(税込)</span></div>
+            </div>
+        </div>
     </div>
 
-    <!-- プラン選択セクション（統合版） -->
+    <!-- プラン選択セクション -->
     <section class="plan-selection-section py-8">
         
         <div class="campaign-header">
             <h2>健康応援キャンペーン</h2>
             <span class="sub-text">12月・1月入会限定プラン</span>
             
-            <!-- 豪華なゴールドプレートバッジ（横長） -->
+            <!-- 豪華なゴールドプレートバッジ -->
             <div class="gold-plate-badge">
                 <span class="badge-amount">68,030<span style="font-size: 0.9rem; color: #333;">円(税込)</span></span>
                 <span class="badge-sub">お得!!</span>
@@ -841,8 +840,6 @@
             <div class="plan-accordion-content">
                 <div class="price-showcase">
                     
-                    <!-- インパクトエリアはヘッダーバッジに統合 -->
-
                     <div class="price-list">
                         <!-- 1. 12月会費（日割り） -->
                         <div class="price-item">
@@ -852,7 +849,6 @@
                             </div>
                             <div class="divider-dot"></div>
                             <div class="price-display-center" id="daily-rate-price-plan1">
-                                <!-- JSにより動的に挿入される -->
                                 <span class="price-value">0<span class="unit">円</span></span>
                                 <span class="calculation-note-final">
                                     本日入会の場合(日割り)<br>
@@ -903,27 +899,19 @@
                             <a href="#options-group-section" style="display: inline-block; background-color: var(--brand); color: white; font-weight: 900; font-size: 0.9rem; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">対象オプション詳細はコチラ</a>
                         </div>
 
-                        <!-- 12月会費合計ブロック (リスト途中に挿入) -->
+                        <!-- 12月会費合計ブロック -->
                         <div class="mid-list-total-block">
                             <div class="label"><i class="ph ph-wallet"></i> 12月会費合計</div>
                             <div><span class="price-large" id="initial-total-price">0<span class="unit-large">円(税込)</span></span></div>
                             <div class="sub-desc">(12月日割り会費 + 事務手数料)</div>
                         </div>
 
-                        <!-- キャンペーン特別価格セクション（旧・5. 月会費 (1月〜6月)） -->
-                        <div class="price-item special-highlight">
+                        <!-- 5. キャンペーン特別価格セクション (上部と完全に一致するデザイン・配置に修正) -->
+                        <div class="special-highlight">
                             <span class="ribbon-label">Special Price</span>
-                            
-                            <!-- 1行目 -->
                             <div class="special-line-1">キャンペーン特別価格</div>
-                            
-                            <!-- 2行目 -->
                             <div class="special-line-2">2026年1月〜6月分(6ヶ月間)</div>
-                            
-                            <!-- 3行目 -->
                             <div class="special-line-3">通常 9,350円</div>
-                            
-                            <!-- 4行目 -->
                             <div class="special-line-4">3,400<span class="unit">円(税込)</span></div>
                         </div>
                     </div>
@@ -978,7 +966,6 @@
             </div>
             <div class="scene">
                 <div id="card-carousel-free" class="card-carousel">
-                    <!-- JSで動的に生成されます -->
                 </div>
             </div>
             <div class="carousel-nav">
@@ -991,7 +978,7 @@
             </div>
         </section>
 
-        <!-- 復活: 3つの有料オプション -->
+        <!-- 有料オプション -->
         <section class="options-carousel-section" style="margin-top: 60px;">
             <div class="text-box">
                 <h2 class="section-title">
@@ -1003,7 +990,6 @@
             </div>
             <div class="scene">
                 <div id="card-carousel-paid" class="card-carousel">
-                    <!-- JSで動的に生成されます -->
                 </div>
             </div>
             <div class="carousel-nav">
@@ -1135,7 +1121,7 @@
         </div>
     </section>
 
-</div> <!-- lp-wrapper end -->
+</div>
 
 <!-- 固定バナー -->
 <div class="fixed-banner">
@@ -1143,7 +1129,6 @@
     <a href="https://joyfit.jp/kyodo/app_join/" class="banner-btn app" target="_blank">入会はコチラ👆</a>
 </div>
 
-<!-- 新規追加: バナー開閉トグルボタン -->
 <div id="banner-toggle-container">
     <button id="banner-toggle-btn">
         <i class="ph ph-x" id="toggle-icon"></i>
@@ -1156,7 +1141,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const timeZone = 'Asia/Tokyo';
     const now = new Date(new Date().toLocaleString("en-US", { timeZone: timeZone }));
     
-    // --- キャンペーン期間設定 (2026/01/04まで) ---
     const CAMPAIGN_END_DATE = new Date(2026, 0, 4, 23, 59, 59, 999);
     const CAMPAIGN_START_DATE = new Date(2025, 11, 21, 0, 0, 0, 0); 
 
@@ -1193,7 +1177,6 @@ document.addEventListener('DOMContentLoaded', function() {
     updateRemainingSlots();
     setInterval(updateRemainingSlots, 60 * 60 * 1000);
 
-    const banner = document.getElementById('limited-time-banner');
     let countdownInterval;
 
     function createCountdownHTML(days, hours, minutes, seconds) {
@@ -1223,14 +1206,13 @@ document.addEventListener('DOMContentLoaded', function() {
     updateAllCountdowns();
     countdownInterval = setInterval(updateAllCountdowns, 1000);
     
-    // --- オプション定義リスト（統合） ---
     const allOptions = [
         { name: '水素水 & プロテイン', price: '月額 3,240円', icon_img: '37.png', description: '水素水＋プロテイン<br>[１日６杯迄]のお得なセット' },
         { name: 'ホットスタジオ', price: '月額 1,100円', icon_img: '36.png', description: '世田谷エリア最大級<br>のレッスンで滝汗体験!' },
         { name: 'あんしんサポートVIP', price: '月額 825円', icon_img: '41.png', description: '万が一の時にも安心な<br>JOYFIT専用サポートプラン' },
         { name: 'オンラインレッスン', price: '月額 1,100円', icon_img: '42.png', description: '自宅で本格的なレッスンが出来る!<br>ジムに来れない日でも安心' },
-        { name: 'タンニングマシン', price: '月額 5,500円', icon_img: '44.png', gender: 'male', genderText: '男性限定', description: '理想の日焼け肌を手に入れたい方へ!<br>※1日20分まで' },
-        { name: 'セルフエステ', price: '月額 3,300円', icon_img: '45.png', gender: 'female', genderText: '女性限定', description: 'エステサロンと同じ<br>業務用マシンが使い放題' },
+        { name: 'タンニングマシン', price: '月額 5,500円', icon_img: '44.png', description: '理想の日焼け肌を手に入れたい方へ!<br>※1日20分まで' },
+        { name: 'セルフエステ', price: '月額 3,300円', icon_img: '45.png', description: 'エステサロンと同じ<br>業務用マシンが使い放題' },
         { name: 'レンタルマット', price: '月額 1,100円', icon_img: '38.png', description: 'マットを持ってこなくてＯＫ!<br>ホットスタジオ参加には必須!' },
         { name: 'レンタルタオル', price: '月額 1,650円', icon_img: '40.png', description: '汗をかいても安心レンタル<br>フェイスタオル・バスタオル' },
         { name: '体組成計', price: '月額 550円', icon_img: '39.png', description: '体脂肪、筋肉量を測定し<br>トレーニングを最適化' }
@@ -1265,7 +1247,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalCards = cards.length;
         let currentIndex = 0;
         let autoPlayInterval;
-        const AUTO_PLAY_DELAY = 4000; // 自動再生の間隔（ミリ秒）
 
         function updateCarousel() {
             const activeIndex = (currentIndex % totalCards + totalCards) % totalCards;
@@ -1282,76 +1263,27 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // --- 自動再生機能 ---
         function startAutoPlay() {
-            stopAutoPlay(); // 多重起動防止
-            autoPlayInterval = setInterval(() => {
-                currentIndex++;
-                updateCarousel();
-            }, AUTO_PLAY_DELAY);
+            stopAutoPlay();
+            autoPlayInterval = setInterval(() => { currentIndex++; updateCarousel(); }, 4000);
         }
+        function stopAutoPlay() { if (autoPlayInterval) clearInterval(autoPlayInterval); }
 
-        function stopAutoPlay() {
-            if (autoPlayInterval) clearInterval(autoPlayInterval);
-        }
+        if(prevBtn) prevBtn.addEventListener('click', () => { currentIndex--; updateCarousel(); stopAutoPlay(); startAutoPlay(); });
+        if(nextBtn) nextBtn.addEventListener('click', () => { currentIndex++; updateCarousel(); stopAutoPlay(); startAutoPlay(); });
 
-        // --- イベントリスナー ---
-        // クリックイベント
-        if(prevBtn) prevBtn.addEventListener('click', () => { 
-            currentIndex--; updateCarousel(); 
-            stopAutoPlay(); startAutoPlay(); // 操作したらタイマーリセット
-        });
-        if(nextBtn) nextBtn.addEventListener('click', () => { 
-            currentIndex++; updateCarousel(); 
-            stopAutoPlay(); startAutoPlay(); // 操作したらタイマーリセット
-        });
-
-        // --- スワイプ対応 (Touch & Mouse) ---
         let startX = 0;
         let isDragging = false;
-
-        const handleDragStart = (x) => {
-            startX = x;
-            isDragging = true;
-            stopAutoPlay(); // ドラッグ中は止める
-            carouselContainer.style.cursor = 'grabbing';
-        };
-
-        const handleDragEnd = (x) => {
+        carouselContainer.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDragging = true; stopAutoPlay(); }, {passive: true});
+        carouselContainer.addEventListener('touchend', (e) => {
             if (!isDragging) return;
-            isDragging = false;
-            carouselContainer.style.cursor = 'grab';
-            
-            const diff = startX - x;
-            const threshold = 50; // 感度（このピクセル以上動かしたら反応）
-
-            if (Math.abs(diff) > threshold) {
-                if (diff > 0) {
-                    // 左へスワイプ (指を左に動かす = 次へ)
-                    currentIndex++;
-                } else {
-                    // 右へスワイプ (指を右に動かす = 前へ)
-                    currentIndex--;
-                }
-                updateCarousel();
-            }
-            startAutoPlay(); // 操作終わったら再開
-        };
-
-        // Touch events (スマホ)
-        carouselContainer.addEventListener('touchstart', (e) => handleDragStart(e.touches[0].clientX), {passive: true});
-        carouselContainer.addEventListener('touchend', (e) => handleDragEnd(e.changedTouches[0].clientX));
-
-        // Mouse events (PC)
-        carouselContainer.addEventListener('mousedown', (e) => handleDragStart(e.clientX));
-        carouselContainer.addEventListener('mouseup', (e) => handleDragEnd(e.clientX));
-        carouselContainer.addEventListener('mouseleave', () => {
-             // マウスが外れたらドラッグキャンセルして再生再開
-             if(isDragging) { isDragging = false; carouselContainer.style.cursor = 'grab'; startAutoPlay(); }
+            const diff = startX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) { if (diff > 0) currentIndex++; else currentIndex--; updateCarousel(); }
+            isDragging = false; startAutoPlay();
         });
 
         updateCarousel();
-        startAutoPlay(); // 初期起動
+        startAutoPlay();
     }
     initializeCarousel(allOptions, 'card-carousel-free', 'carousel-prev-free', 'carousel-next-free');
     initializeCarousel(paidOptions, 'card-carousel-paid', 'carousel-prev-paid', 'carousel-next-paid', true);
@@ -1363,11 +1295,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const priceEl = document.getElementById(`daily-rate-price-${planPrefix}`);
         const totalInitialPriceEl = document.getElementById('initial-total-price');
         const INITIAL_FEE = 3300; 
-        if (!priceEl) return;
         const currentDay = now.getDate(); 
         const remainingDays = DAYS_IN_DECEMBER - currentDay + 1;
         const currentMonthFee = Math.round(DAILY_RATE * remainingDays);
-        priceEl.innerHTML = `<span class="price-value">${currentMonthFee.toLocaleString()}<span class="unit">円</span></span><span class="calculation-note-final">本日 ${currentDay}日入会の場合<br>※誤差の可能性有り</span>`;
+        if (priceEl) priceEl.innerHTML = `<span class="price-value">${currentMonthFee.toLocaleString()}<span class="unit">円</span></span><span class="calculation-note-final">本日 ${currentDay}日入会の場合<br>※誤差の可能性有り</span>`;
         if(totalInitialPriceEl) totalInitialPriceEl.innerHTML = `${(currentMonthFee + INITIAL_FEE).toLocaleString()}<span class="unit-large">円(税込)</span>`;
     }
     calculatePrice('plan1');
@@ -1388,22 +1319,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     createGoldDust();
 
-    // --- 新規追加: バナー開閉トグルロジック ---
     const toggleBtn = document.getElementById('banner-toggle-btn');
     const toggleIcon = document.getElementById('toggle-icon');
     const toggleTooltip = document.getElementById('toggle-tooltip');
-
     if (toggleBtn) {
         toggleBtn.addEventListener('click', function() {
             document.body.classList.toggle('banner-hidden');
-            
-            // アイコンとツールチップの切り替え
             if (document.body.classList.contains('banner-hidden')) {
-                // バナーが隠れた -> アイコンを上矢印や「入会」っぽいものに変更
                 toggleIcon.classList.replace('ph-x', 'ph-caret-up');
                 toggleTooltip.textContent = "バナーを表示";
             } else {
-                // バナーが出ている -> 閉じるアイコンに変更
                 toggleIcon.classList.replace('ph-caret-up', 'ph-x');
                 toggleTooltip.textContent = "閉じる";
             }
