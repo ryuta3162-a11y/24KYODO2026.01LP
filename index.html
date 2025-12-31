@@ -83,13 +83,49 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            background-color: #fff0f0;
+            background-color: #fff5f5; /* 少し温かみのある白 */
             background-image:
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8) 0%, transparent 10%),
                 linear-gradient(45deg, #ffe8e8 25%, transparent 25%, transparent 75%, #ffe8e8 75%, #ffe8e8),
                 linear-gradient(45deg, #ffe8e8 25%, transparent 25%, transparent 75%, #ffe8e8 75%, #ffe8e8);
-            background-size: 60px 60px;
-            background-position: 0 0, 30px 30px;
-            opacity: 0.6;
+            background-size: 40px 40px, 60px 60px, 60px 60px;
+            background-position: 0 0, 0 0, 30px 30px;
+            opacity: 0.5;
+        }
+
+        /* 新春スペシャル：紅白紙吹雪コンテナ */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9998; /* 最前面に近いがモーダル等の下 */
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--brand);
+            opacity: 0.8;
+            top: -20px;
+            animation: confetti-fall linear forwards;
+        }
+        
+        /* 紙吹雪のバリエーション */
+        .confetti.white { background-color: #fff; border: 1px solid #eee; }
+        .confetti.gold { background-color: var(--newyear-gold); box-shadow: 0 0 4px var(--newyear-gold-light); }
+        .confetti.red { background-color: var(--brand); }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 1; }
+            25% { transform: translateY(25vh) rotate(90deg) translateX(15px); }
+            50% { transform: translateY(50vh) rotate(180deg) translateX(-15px); }
+            75% { transform: translateY(75vh) rotate(270deg) translateX(15px); }
+            100% { transform: translateY(110vh) rotate(360deg) translateX(0); opacity: 0; }
         }
 
         .gold-dust-container {
@@ -153,23 +189,33 @@
             100% { left: 200%; }
         }
 
-        /* --- トップバナー --- */
+        /* --- トップバナー (新春強化版) --- */
         #limited-time-banner {
             width: 100%;
             background: #ffffff;
             border: 4px solid var(--newyear-gold);
             position: relative;
             border-radius: 16px;
-            padding: 50px 10px 25px 10px; /* リボン用余白 */
+            padding: 55px 10px 30px 10px; /* リボン用余白 */
             box-sizing: border-box;
             display: flex;
             flex-direction: column; 
             align-items: center;
             justify-content: center;
             gap: 12px;
-            box-shadow: 0 10px 25px rgba(194, 22, 50, 0.15);
+            /* 神々しい金色のオーラを追加 */
+            box-shadow: 
+                0 10px 25px rgba(194, 22, 50, 0.15),
+                0 0 20px rgba(212, 175, 55, 0.3),
+                0 0 60px rgba(248, 231, 28, 0.2) inset; 
             margin-top: 50px;
             overflow: visible;
+            animation: holy-glow 4s infinite alternate;
+        }
+
+        @keyframes holy-glow {
+            0% { box-shadow: 0 10px 25px rgba(194, 22, 50, 0.15), 0 0 15px rgba(212, 175, 55, 0.2); border-color: var(--newyear-gold); }
+            100% { box-shadow: 0 15px 35px rgba(194, 22, 50, 0.25), 0 0 30px rgba(212, 175, 55, 0.6); border-color: var(--newyear-gold-light); }
         }
 
         #limited-time-banner::before { display: none; }
@@ -178,7 +224,7 @@
         /* === 豪華リボン装飾 === */
         .luxury-ribbon-wrapper {
             position: absolute;
-            top: -40px;
+            top: -45px; /* 少し上に調整 */
             left: 50%;
             transform: translateX(-50%);
             width: auto;
@@ -269,7 +315,7 @@
 
         @media (max-width: 600px) {
              #limited-time-banner { padding: 50px 10px 20px 10px; }
-             .luxury-ribbon-wrapper { max-width: 100%; top: -35px; }
+             .luxury-ribbon-wrapper { max-width: 100%; top: -40px; }
              .ribbon-body { font-size: 1.1rem; padding: 12px 25px; }
              .ribbon-tail { width: 50px; height: 40px; }
              .ribbon-tail.left { left: -35px; }
@@ -641,12 +687,13 @@
         }
         .bonus-button-link:hover { transform: translateY(-3px); border-color: var(--brand); }
         .bonus-button-link .title { display: inline-block; border: 2px solid var(--brand); color: var(--brand); padding: 0.25rem 0.75rem; border-radius: 8px; font-size: 1rem; font-weight: 900; margin-bottom: 0.5rem; background: #fff; }
-        .bonus-button-link.spotlight { background-color: #fffbe6; border-color: #facc15; }
-        .bonus-button-link.spotlight .title { color: #a16207; margin-bottom: 0.25rem; border-color: #a16207; }
         .bonus-button-link .detail { font-size: 1.15rem; font-weight: 700; color: var(--color-dark); line-height: 1.5; }
         .bonus-button-link .detail .price-spotlight { color: var(--brand); font-weight: 900; font-size: 1.3rem; display: inline-block; }
         .bonus-button-link .detail .note, .bonus-button-link .detail .duration-note, .bonus-button-link .detail .transfer-note { font-size: 0.75rem; font-weight: 400; color: #555; display: block; margin-top: 0.25rem; line-height: 1.3; }
         
+        .bonus-button-link.spotlight { background-color: #fffbe6; border-color: #facc15; }
+        .bonus-button-link.spotlight .title { color: #a16207; margin-bottom: 0.25rem; border-color: #a16207; }
+
         /* --- アクセスマップセクション --- */
         .access-section { 
             background: var(--color-card-bg); margin: 30px auto; border-radius: var(--border-radius); overflow: hidden; 
@@ -777,6 +824,7 @@
 
 <!-- 背景装飾用の要素 -->
 <div class="japanese-pattern-bg"></div>
+<div class="confetti-container" id="confetti-container"></div>
 <div class="gold-dust-container" id="gold-dust-container"></div>
 
 <!-- コンテンツ全体をラッパーで囲み、中央寄せを保証 -->
@@ -827,12 +875,12 @@
         
         <div class="campaign-header">
             <h2>健康応援キャンペーン</h2>
-            <span class="sub-text">12月・1月入会限定プラン</span>
+            <span class="sub-text">1月入会限定プラン</span>
             
             <!-- 豪華なゴールドプレートバッジ -->
             <div class="gold-plate-badge">
-                <span class="badge-amount">68,030<span style="font-size: 0.9rem; color: #333;">円(税込)</span></span>
-                <span class="badge-sub">お得!!</span>
+                <span class="badge-amount">74,630<span style="font-size: 0.9rem; color: #333;">円(税込)</span></span>
+                <span class="badge-sub">最大お得!!</span>
             </div>
         </div>
 
@@ -841,11 +889,11 @@
                 <div class="price-showcase">
                     
                     <div class="price-list">
-                        <!-- 1. 12月会費（日割り） -->
+                        <!-- 1. 1月会費（日割り） -->
                         <div class="price-item">
                             <div class="label-group">
                                 <span class="number-circle" style="background-color: #555;">1</span>
-                                <div class="label">12月会費<span class="note" style="color:#555; font-weight:400;">(初月)</span></div>
+                                <div class="label">1月会費<span class="note" style="color:#555; font-weight:400;">(日割料金)</span></div>
                             </div>
                             <div class="divider-dot"></div>
                             <div class="price-display-center" id="daily-rate-price-plan1">
@@ -886,7 +934,7 @@
                         <div class="price-item is-free">
                             <div class="label-group">
                                 <span class="number-circle">4</span>
-                                <div class="label">オプション<span class="note" style="color: var(--brand);">12月・1月分</span></div>
+                                <div class="label">オプション<span class="note" style="color: var(--brand);">1月分</span></div>
                             </div>
                             <div class="divider-dot"></div>
                             <div class="price-display-center">
@@ -899,14 +947,14 @@
                             <a href="#options-group-section" style="display: inline-block; background-color: var(--brand); color: white; font-weight: 900; font-size: 0.9rem; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">対象オプション詳細はコチラ</a>
                         </div>
 
-                        <!-- 12月会費合計ブロック -->
+                        <!-- 1月会費合計ブロック -->
                         <div class="mid-list-total-block">
-                            <div class="label"><i class="ph ph-wallet"></i> 12月会費合計</div>
+                            <div class="label"><i class="ph ph-wallet"></i> 1月会費合計</div>
                             <div><span class="price-large" id="initial-total-price">0<span class="unit-large">円(税込)</span></span></div>
-                            <div class="sub-desc">(12月日割り会費 + 事務手数料)</div>
+                            <div class="sub-desc">(1月日割り会費 + 事務手数料)</div>
                         </div>
 
-                        <!-- 5. キャンペーン特別価格セクション (上部と完全に一致するデザイン・配置に修正) -->
+                        <!-- 5. キャンペーン特別価格セクション -->
                         <div class="special-highlight">
                             <span class="ribbon-label">Special Price</span>
                             <div class="special-line-1">キャンペーン特別価格</div>
@@ -961,7 +1009,7 @@
                     <span class="highlight">8</span>つの無料オプション
                 </h2>
                 <p class="section-subtitle">
-                    <strong>キャンペーン期間中<br>12月・1月分がすべて<span style="color: var(--newyear-gold); font-size: 1.2rem;">0円</span>で使い放題！<br>※8つのオプションは入会時自動契約されます。</strong>
+                    <strong>キャンペーン期間中<br>1月分がすべて<span style="color: var(--newyear-gold); font-size: 1.2rem;">0円</span>で使い放題！<br>※8つのオプションは入会時自動契約されます。</strong>
                 </p>
             </div>
             <div class="scene">
@@ -1138,9 +1186,11 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const timeZone = 'Asia/Tokyo';
-    const now = new Date(new Date().toLocaleString("en-US", { timeZone: timeZone }));
+    // プレビュー用に日時を強制的に2026年1月1日に設定 (ユーザーの要望により12/31も1/1扱い)
+    // 実際の本番環境では new Date() に戻してください。
+    const now = new Date(2026, 0, 1, 10, 0, 0); 
     
+    // キャンペーン期間設定
     const CAMPAIGN_END_DATE = new Date(2026, 0, 4, 23, 59, 59, 999);
     const CAMPAIGN_START_DATE = new Date(2025, 11, 21, 0, 0, 0, 0); 
 
@@ -1164,7 +1214,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function updateRemainingSlots() {
-        const now = new Date(new Date().toLocaleString("en-US", { timeZone: timeZone }));
+        // 残り人数の計算は固定日時(now)を使用
         const slots = getRemainingSlots(now);
         if (remainingSlotsEl) {
             if (slots > 0 && now.getTime() < CAMPAIGN_END_DATE.getTime()) {
@@ -1175,8 +1225,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     updateRemainingSlots();
-    setInterval(updateRemainingSlots, 60 * 60 * 1000);
 
+    // カウントダウンロジック
     let countdownInterval;
 
     function createCountdownHTML(days, hours, minutes, seconds) {
@@ -1187,9 +1237,15 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="countdown-circle"><div class="countdown-number">${String(seconds).padStart(2, '0')}</div><div class="countdown-unit">秒</div></div>
         `;
     }
+    
+    // カウントダウン表示の更新関数
     function updateAllCountdowns() {
-        const now = new Date(new Date().toLocaleString("en-US", { timeZone: timeZone }));
-        const distance = CAMPAIGN_END_DATE.getTime() - now.getTime();
+        const realNow = new Date();
+        const timeOffset = realNow.getTime() % 60000; // 秒単位のオフセット
+        const simulatedTime = new Date(now.getTime() - timeOffset); // 擬似的に秒数を減らす（残り時間を減らす）
+        
+        const distance = CAMPAIGN_END_DATE.getTime() - now.getTime(); // 固定日時からの距離
+
         const bannerCountdownContainer = document.getElementById('banner-countdown');
         if (distance > 0) {
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -1204,7 +1260,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     updateAllCountdowns();
-    countdownInterval = setInterval(updateAllCountdowns, 1000);
+    // 実際に秒数を減らす演出を入れる場合はここを調整しますが、今回は固定表示の確認を優先します
+    // countdownInterval = setInterval(updateAllCountdowns, 1000);
     
     const allOptions = [
         { name: '水素水 & プロテイン', price: '月額 3,240円', icon_img: '37.png', description: '水素水＋プロテイン<br>[１日６杯迄]のお得なセット' },
@@ -1232,7 +1289,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const createCardHTML = (option) => `
             <div class="option-card-3d">
-                <div class="card-badge ${isPaid ? 'paid' : 'free'}">${isPaid ? '有料オプション' : '12・1月無料'}</div>
+                <div class="card-badge ${isPaid ? 'paid' : 'free'}">${isPaid ? '有料オプション' : '1月無料'}</div>
                 <div class="card-icon-area">
                     <img src="./${option.icon_img}" alt="${option.name}" class="card-icon" onerror="this.onerror=null; this.src='https://placehold.co/150x150/transparent/cccccc?text=Option';">
                 </div>
@@ -1288,20 +1345,62 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeCarousel(allOptions, 'card-carousel-free', 'carousel-prev-free', 'carousel-next-free');
     initializeCarousel(paidOptions, 'card-carousel-paid', 'carousel-prev-paid', 'carousel-next-paid', true);
 
+    // 1月の日割り計算ロジック
     function calculatePrice(planPrefix) {
-        const MONTHLY_FEE = 9350;
-        const DAYS_IN_DECEMBER = 31;
-        const DAILY_RATE = MONTHLY_FEE / DAYS_IN_DECEMBER;
+        // 1月〜6月はキャンペーン価格3,400円のため、日割りの基準も3,400円に変更
+        const MONTHLY_FEE = 3400; 
+        const INITIAL_FEE = 3300; 
         const priceEl = document.getElementById(`daily-rate-price-${planPrefix}`);
         const totalInitialPriceEl = document.getElementById('initial-total-price');
-        const INITIAL_FEE = 3300; 
+        
         const currentDay = now.getDate(); 
-        const remainingDays = DAYS_IN_DECEMBER - currentDay + 1;
-        const currentMonthFee = Math.round(DAILY_RATE * remainingDays);
-        if (priceEl) priceEl.innerHTML = `<span class="price-value">${currentMonthFee.toLocaleString()}<span class="unit">円</span></span><span class="calculation-note-final">本日 ${currentDay}日入会の場合<br>※誤差の可能性有り</span>`;
-        if(totalInitialPriceEl) totalInitialPriceEl.innerHTML = `${(currentMonthFee + INITIAL_FEE).toLocaleString()}<span class="unit-large">円(税込)</span>`;
+        const currentMonth = now.getMonth(); // 0が1月
+        
+        let currentMonthFee = 0;
+        
+        // 1月の計算ロジック: 1月1日は3,400円、1月31日は0円
+        if (currentMonth === 0) {
+            // (31 - 現在の日付) / 30 * 3400
+            currentMonthFee = Math.round(MONTHLY_FEE * (31 - currentDay) / 30);
+        } else {
+            // 1月以外の場合（テスト用など）は便宜上0円またはフル料金
+            currentMonthFee = currentMonth < 0 ? MONTHLY_FEE : 0;
+        }
+
+        if (priceEl) {
+            priceEl.innerHTML = `
+                <span class="price-value">${currentMonthFee.toLocaleString()}<span class="unit">円</span></span>
+                <span class="calculation-note-final">本日 ${currentDay}日入会の場合<br>※誤差の可能性有り</span>
+            `;
+        }
+        if(totalInitialPriceEl) {
+            totalInitialPriceEl.innerHTML = `${(currentMonthFee + INITIAL_FEE).toLocaleString()}<span class="unit-large">円(税込)</span>`;
+        }
     }
     calculatePrice('plan1');
+
+    // 紅白紙吹雪エフェクト (新春追加)
+    function createConfetti() {
+        const container = document.getElementById('confetti-container');
+        if (!container) return;
+        
+        const colors = ['red', 'white', 'gold'];
+        const confettiCount = 40; // 紙吹雪の量
+
+        for (let i = 0; i < confettiCount; i++) {
+            const confetti = document.createElement('div');
+            const colorClass = colors[Math.floor(Math.random() * colors.length)];
+            confetti.classList.add('confetti', colorClass);
+            
+            // ランダムな位置とアニメーション時間
+            confetti.style.left = `${Math.random() * 100}%`;
+            confetti.style.animationDuration = `${Math.random() * 5 + 5}s`; // 5〜10秒
+            confetti.style.animationDelay = `${Math.random() * 5}s`;
+            
+            container.appendChild(confetti);
+        }
+    }
+    createConfetti();
 
     function createGoldDust() {
         const container = document.getElementById('gold-dust-container');
