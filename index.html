@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- フォントをNoto Sans JPに統一 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     
@@ -19,7 +19,7 @@
             /* ブランドカラーを統一 */
             --brand: #C21632; 
             
-            /* お正月用アクセント */
+            /* アクセント（元のゴールド等は維持しつつ、背景はシンプルに） */
             --newyear-gold: #D4AF37; 
             --newyear-gold-light: #F8E71C; 
             --newyear-gold-dark: #B48811; 
@@ -32,7 +32,10 @@
             --color-background-start: #fff0f0;
             --color-background-end: #ffe4e4;
 
-            /* フォント設定 */
+            /* 背景グラデーション（シンプル） */
+            --bg-body: #f4f6f9;
+
+            /* フォント設定：全て Noto Sans JP に統一 */
             --font-base: 'Noto Sans JP', sans-serif;
             --font-accent: 'Noto Sans JP', sans-serif;
             
@@ -56,8 +59,13 @@
         *, *::before, *::after {
             box-sizing: inherit;
         }
-        body {
+        
+        /* 全要素に対してフォントを適用 */
+        body, button, input, select, textarea {
             font-family: var(--font-base);
+        }
+
+        body {
             text-align: center;
             margin: 0;
             padding: 0;
@@ -66,7 +74,10 @@
             color: var(--color-text);
             min-height: 100vh;
             position: relative;
-            background-color: #fffafadd;
+            /* 背景をシンプルに変更 */
+            background-color: var(--bg-body);
+            background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
+            background-size: 20px 20px;
             transition: padding-bottom 0.4s ease; /* バナー開閉時のスムーズな余白調整 */
         }
         
@@ -75,86 +86,6 @@
             padding-bottom: 40px; /* バナーがない時の余白 */
         }
 
-        /* --- 年末年始用 背景演出 --- */
-        .japanese-pattern-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background-color: #fff5f5; /* 少し温かみのある白 */
-            background-image:
-                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8) 0%, transparent 10%),
-                linear-gradient(45deg, #ffe8e8 25%, transparent 25%, transparent 75%, #ffe8e8 75%, #ffe8e8),
-                linear-gradient(45deg, #ffe8e8 25%, transparent 25%, transparent 75%, #ffe8e8 75%, #ffe8e8);
-            background-size: 40px 40px, 60px 60px, 60px 60px;
-            background-position: 0 0, 0 0, 30px 30px;
-            opacity: 0.5;
-        }
-
-        /* 新春スペシャル：紅白紙吹雪コンテナ */
-        .confetti-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9998; /* 最前面に近いがモーダル等の下 */
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: var(--brand);
-            opacity: 0.8;
-            top: -20px;
-            animation: confetti-fall linear forwards;
-        }
-        
-        /* 紙吹雪のバリエーション */
-        .confetti.white { background-color: #fff; border: 1px solid #eee; }
-        .confetti.gold { background-color: var(--newyear-gold); box-shadow: 0 0 4px var(--newyear-gold-light); }
-        .confetti.red { background-color: var(--brand); }
-
-        @keyframes confetti-fall {
-            0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 1; }
-            25% { transform: translateY(25vh) rotate(90deg) translateX(15px); }
-            50% { transform: translateY(50vh) rotate(180deg) translateX(-15px); }
-            75% { transform: translateY(75vh) rotate(270deg) translateX(15px); }
-            100% { transform: translateY(110vh) rotate(360deg) translateX(0); opacity: 0; }
-        }
-
-        .gold-dust-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .gold-particle {
-            position: absolute;
-            background: radial-gradient(circle, var(--newyear-gold-light) 0%, var(--newyear-gold) 100%);
-            border-radius: 50%;
-            opacity: 0;
-            animation: float-down linear infinite;
-            box-shadow: 0 0 5px var(--newyear-gold-light);
-        }
-
-        @keyframes float-down {
-            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(110vh) translateX(20px) rotate(360deg); opacity: 0; }
-        }
-        
         /* コンテンツラッパー */
         .lp-wrapper {
             width: 100%;
@@ -179,7 +110,6 @@
             font-weight: 700;
             margin: 40px 0 24px 0;
             color: #333;
-            font-family: var(--font-base);
         }
 
         /* === 共通アニメーション: シャインエフェクト === */
@@ -189,7 +119,7 @@
             100% { left: 200%; }
         }
 
-        /* --- トップバナー (新春強化版) --- */
+        /* --- トップバナー (構成は元の豪華なまま) --- */
         #limited-time-banner {
             width: 100%;
             background: #ffffff;
@@ -206,8 +136,7 @@
             /* 神々しい金色のオーラを追加 */
             box-shadow: 
                 0 10px 25px rgba(194, 22, 50, 0.15),
-                0 0 20px rgba(212, 175, 55, 0.3),
-                0 0 60px rgba(248, 231, 28, 0.2) inset; 
+                0 0 20px rgba(212, 175, 55, 0.3);
             margin-top: 50px;
             overflow: visible;
             animation: holy-glow 4s infinite alternate;
@@ -822,16 +751,11 @@
 
 <body>
 
-<!-- 背景装飾用の要素 -->
-<div class="japanese-pattern-bg"></div>
-<div class="confetti-container" id="confetti-container"></div>
-<div class="gold-dust-container" id="gold-dust-container"></div>
-
 <!-- コンテンツ全体をラッパーで囲み、中央寄せを保証 -->
 <div class="lp-wrapper">
 
     <div id="limited-time-banner">
-        <!-- 豪華リボン構造 -->
+        <!-- 豪華リボン構造 (復活) -->
         <div class="luxury-ribbon-wrapper">
             <div class="ribbon-tail left"></div>
             <div class="ribbon-tail right"></div>
@@ -847,7 +771,7 @@
 
         <div class="banner-left-content">
             <div class="banner-text-row-top">
-                <span class="banner-date" id="dynamic-end-date">1月4日(日)まで</span>
+                <span class="banner-date" id="dynamic-end-date">1月31日(土)まで</span>
                 <span class="banner-slots-badge" id="remaining-slots">先着30名様</span>
             </div>
             <div class="banner-text-row-bottom">
@@ -877,9 +801,9 @@
             <h2>健康応援キャンペーン</h2>
             <span class="sub-text">1月入会限定プラン</span>
             
-            <!-- 豪華なゴールドプレートバッジ -->
+            <!-- 豪華なゴールドプレートバッジ (金額のみ修正) -->
             <div class="gold-plate-badge">
-                <span class="badge-amount">74,630<span style="font-size: 0.9rem; color: #333;">円(税込)</span></span>
+                <span class="badge-amount">50,765<span style="font-size: 0.9rem; color: #333;">円(税込)</span></span>
                 <span class="badge-sub">最大お得!!</span>
             </div>
         </div>
@@ -905,35 +829,22 @@
                             </div>
                         </div>
 
-                        <!-- 2. 入会金 -->
-                        <div class="price-item is-free">
-                            <div class="label-group">
-                                <span class="number-circle">2</span>
-                                <div class="label">入会金</div>
-                            </div>
-                            <div class="divider-dot"></div>
-                            <div class="price-display-center">
-                                <span class="original">2,200円</span>
-                                <span class="price-value zero-yen">0<span class="unit">円</span></span>
-                            </div>
-                        </div>
-
-                        <!-- 3. 事務手数料 -->
+                        <!-- 2. 初期費用 (入会金+事務手数料を統合) -->
                         <div class="price-item">
                             <div class="label-group">
-                                <span class="number-circle" style="background-color: #555;">3</span>
-                                <div class="label">事務手数料</div>
+                                <span class="number-circle" style="background-color: #555;">2</span>
+                                <div class="label">初期費用<span class="note" style="color:#555; font-weight:400;">(入会金+事務手数料)</span></div>
                             </div>
                             <div class="divider-dot"></div>
                             <div class="price-display-center">
-                                <span class="price-value">3,300<span class="unit">円</span></span>
+                                <span class="price-value">5,500<span class="unit">円</span></span>
                             </div>
                         </div>
 
-                        <!-- 4. オプション -->
+                        <!-- 3. オプション -->
                         <div class="price-item is-free">
                             <div class="label-group">
-                                <span class="number-circle">4</span>
+                                <span class="number-circle">3</span>
                                 <div class="label">オプション<span class="note" style="color: var(--brand);">1月分</span></div>
                             </div>
                             <div class="divider-dot"></div>
@@ -949,12 +860,12 @@
 
                         <!-- 1月会費合計ブロック -->
                         <div class="mid-list-total-block">
-                            <div class="label"><i class="ph ph-wallet"></i> 1月会費合計</div>
+                            <div class="label"><i class="ph ph-wallet"></i> 1月支払目安</div>
                             <div><span class="price-large" id="initial-total-price">0<span class="unit-large">円(税込)</span></span></div>
-                            <div class="sub-desc">(1月日割り会費 + 事務手数料)</div>
+                            <div class="sub-desc">(1月日割り会費 + 初期費用5,500円)</div>
                         </div>
 
-                        <!-- 5. キャンペーン特別価格セクション -->
+                        <!-- キャンペーン特別価格セクション -->
                         <div class="special-highlight">
                             <span class="ribbon-label">Special Price</span>
                             <div class="special-line-1">キャンペーン特別価格</div>
@@ -1186,13 +1097,13 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // プレビュー用に日時を強制的に2026年1月1日に設定 (ユーザーの要望により12/31も1/1扱い)
+    // プレビュー用に日時を強制的に2026年1月5日に設定
     // 実際の本番環境では new Date() に戻してください。
-    const now = new Date(2026, 0, 1, 10, 0, 0); 
+    const now = new Date(2026, 0, 5, 10, 0, 0); 
     
-    // キャンペーン期間設定
-    const CAMPAIGN_END_DATE = new Date(2026, 0, 4, 23, 59, 59, 999);
-    const CAMPAIGN_START_DATE = new Date(2025, 11, 21, 0, 0, 0, 0); 
+    // キャンペーン期間設定 (1月31日まで)
+    const CAMPAIGN_END_DATE = new Date(2026, 0, 31, 23, 59, 59, 999);
+    const CAMPAIGN_START_DATE = new Date(2026, 0, 1, 0, 0, 0, 0); 
 
     const remainingSlotsEl = document.getElementById('remaining-slots');
     
@@ -1207,8 +1118,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (today.getTime() < fixedStartDate.getTime()) { return maxSlots; }
         const diffTime = today.getTime() - fixedStartDate.getTime();
         const diffDays = Math.max(0, Math.floor(diffTime / (1000 * 60 * 60 * 24)));
+        // 緩やかに減るように調整
         const reductionRange = maxSlots - minSlots; 
-        const slotsDecreased = Math.floor((diffDays / (totalDurationDays - 1)) * reductionRange);
+        const slotsDecreased = Math.floor((diffDays / (totalDurationDays - 1)) * reductionRange * 0.8);
         let slots = maxSlots - slotsDecreased;
         return Math.max(slots, minSlots);
     }
@@ -1260,8 +1172,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     updateAllCountdowns();
-    // 実際に秒数を減らす演出を入れる場合はここを調整しますが、今回は固定表示の確認を優先します
-    // countdownInterval = setInterval(updateAllCountdowns, 1000);
     
     const allOptions = [
         { name: '水素水 & プロテイン', price: '月額 3,240円', icon_img: '37.png', description: '水素水＋プロテイン<br>[１日６杯迄]のお得なセット' },
@@ -1349,7 +1259,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function calculatePrice(planPrefix) {
         // 1月〜6月はキャンペーン価格3,400円のため、日割りの基準も3,400円に変更
         const MONTHLY_FEE = 3400; 
-        const INITIAL_FEE = 3300; 
+        const INITIAL_FEE = 5500; // 入会金2200 + 事務手数料3300 = 5500
         const priceEl = document.getElementById(`daily-rate-price-${planPrefix}`);
         const totalInitialPriceEl = document.getElementById('initial-total-price');
         
@@ -1358,12 +1268,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         let currentMonthFee = 0;
         
-        // 1月の計算ロジック: 1月1日は3,400円、1月31日は0円
+        // 1月の計算ロジック
         if (currentMonth === 0) {
             // (31 - 現在の日付) / 30 * 3400
             currentMonthFee = Math.round(MONTHLY_FEE * (31 - currentDay) / 30);
         } else {
-            // 1月以外の場合（テスト用など）は便宜上0円またはフル料金
+            // 1月以外の場合
             currentMonthFee = currentMonth < 0 ? MONTHLY_FEE : 0;
         }
 
@@ -1378,45 +1288,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     calculatePrice('plan1');
-
-    // 紅白紙吹雪エフェクト (新春追加)
-    function createConfetti() {
-        const container = document.getElementById('confetti-container');
-        if (!container) return;
-        
-        const colors = ['red', 'white', 'gold'];
-        const confettiCount = 40; // 紙吹雪の量
-
-        for (let i = 0; i < confettiCount; i++) {
-            const confetti = document.createElement('div');
-            const colorClass = colors[Math.floor(Math.random() * colors.length)];
-            confetti.classList.add('confetti', colorClass);
-            
-            // ランダムな位置とアニメーション時間
-            confetti.style.left = `${Math.random() * 100}%`;
-            confetti.style.animationDuration = `${Math.random() * 5 + 5}s`; // 5〜10秒
-            confetti.style.animationDelay = `${Math.random() * 5}s`;
-            
-            container.appendChild(confetti);
-        }
-    }
-    createConfetti();
-
-    function createGoldDust() {
-        const container = document.getElementById('gold-dust-container');
-        if (!container) return;
-        for (let i = 0; i < 20; i++) {
-            const particle = document.createElement('div');
-            particle.classList.add('gold-particle');
-            const size = Math.random() * 6 + 2; 
-            particle.style.width = `${size}px`; particle.style.height = `${size}px`;
-            particle.style.left = `${Math.random() * 100}%`;
-            particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
-            particle.style.animationDelay = `${Math.random() * 5}s`;
-            container.appendChild(particle);
-        }
-    }
-    createGoldDust();
 
     const toggleBtn = document.getElementById('banner-toggle-btn');
     const toggleIcon = document.getElementById('toggle-icon');
