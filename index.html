@@ -19,7 +19,7 @@
             /* ブランドカラーを統一 */
             --brand: #C21632; 
             
-            /* アクセント（元のゴールド等は維持しつつ、背景はシンプルに） */
+            /* アクセント（元のゴールド等は維持） */
             --newyear-gold: #D4AF37; 
             --newyear-gold-light: #F8E71C; 
             --newyear-gold-dark: #B48811; 
@@ -32,8 +32,8 @@
             --color-background-start: #fff0f0;
             --color-background-end: #ffe4e4;
 
-            /* 背景グラデーション（シンプル） */
-            --bg-body: #f4f6f9;
+            /* 背景色（薄いグレーに変更） */
+            --bg-body: #f2f2f2;
 
             /* フォント設定：全て Noto Sans JP に統一 */
             --font-base: 'Noto Sans JP', sans-serif;
@@ -74,10 +74,8 @@
             color: var(--color-text);
             min-height: 100vh;
             position: relative;
-            /* 背景をシンプルに変更 */
+            /* 背景を単色の薄いグレーに変更（ドットパターン削除） */
             background-color: var(--bg-body);
-            background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
-            background-size: 20px 20px;
             transition: padding-bottom 0.4s ease; /* バナー開閉時のスムーズな余白調整 */
         }
         
@@ -886,7 +884,7 @@
                 <div class="plan-conditions-list" style="margin-top: 2rem;">
                     <ul>
                         <li><i class="ph ph-calendar-check"></i><span><strong>2026年7月末までの在籍</strong>が条件です</span></li>
-                        <li><i class="ph ph-warning-circle"></i><span>期間内に退会された場合、違約金として<strong>37,900円</strong>が発生します</span></li>
+                        <li><i class="ph ph-warning-circle"></i><span>期間内に退会された場合、解約金として<strong>35,700円</strong>が発生します</span></li>
                         <li><i class="ph ph-device-mobile-camera"></i><span>JOYFITAPPからの入会が必須です</span></li>
                         <li><i class="ph ph-gear"></i><span><strong>無料オプション</strong>は入会時、<strong>全て自動契約</strong>となります</span></li>
                     </ul>
@@ -1097,9 +1095,8 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // プレビュー用に日時を強制的に2026年1月5日に設定
-    // 実際の本番環境では new Date() に戻してください。
-    const now = new Date(2026, 0, 5, 10, 0, 0); 
+    // 現在の日時を取得（自動計算用）
+    const now = new Date(); 
     
     // キャンペーン期間設定 (1月31日まで)
     const CAMPAIGN_END_DATE = new Date(2026, 0, 31, 23, 59, 59, 999);
